@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><script>(function(){var t=localStorage.getItem("noderadar_theme")||"light";document.documentElement.setAttribute("data-theme",t);})();</script>
+<link rel="stylesheet" href="../../css/theme.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="0; url=../kexin-cloud-review/index.html">
+  <title>正在跳转至可信云深度评测...</title>
+</head>
+<body>
+  <p>正在跳转至 <a href="../kexin-cloud-review/index.html">可信云 (Kosing Cloud) 深度实测报告</a>...</p>
+<script>
+(function(){
+  function getTheme(){return localStorage.getItem('noderadar_theme')||'light';}
+  function updateThemeUI(t){
+    document.documentElement.setAttribute('data-theme',t);
+    var isDark=(t==='dark');
+    var btns=document.querySelectorAll('#theme-toggle,#mobile-theme-toggle');
+    btns.forEach(function(b){
+      var l=b.querySelector('.theme-toggle-label');
+      if(l){
+        if(b.id==='mobile-theme-toggle'){
+          l.textContent=isDark?'\u65e5\u95f4\u6a21\u5f0f (\u53d6\u6d88\u591c\u95f4)':'\u591c\u95f4\u6a21\u5f0f (\u5f00\u542f\u6697\u8272)';
+        }else{
+          l.textContent=isDark?'\u65e5\u95f4\u6a21\u5f0f':'\u591c\u95f4\u6a21\u5f0f';
+        }
+      }
+      b.setAttribute('title',isDark?'\u70b9\u51fb\u5207\u6362\u4e3a\u65e5\u95f4\u6a21\u5f0f':'\u70b9\u51fb\u5f00\u542f\u591c\u95f4\u6a21\u5f0f');
+      b.setAttribute('aria-label',isDark?'\u5207\u6362\u65e5\u95f4\u6a21\u5f0f':'\u5207\u6362\u591c\u95f4\u6a21\u5f0f');
+    });
+  }
+  function toggleTheme(){
+    var cur=getTheme();
+    var next=(cur==='dark')?'light':'dark';
+    try{localStorage.setItem('noderadar_theme',next);}catch(e){}
+    updateThemeUI(next);
+  }
+  function init(){
+    updateThemeUI(getTheme());
+    ['theme-toggle','mobile-theme-toggle'].forEach(function(id){
+      var el=document.getElementById(id);
+      if(el&&!el.dataset.bound){
+        el.dataset.bound='true';
+        el.addEventListener('click',toggleTheme);
+      }
+    });
+  }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',init);
+  }else{
+    init();
+  }
+})();
+</script>
+</body>
+</html>

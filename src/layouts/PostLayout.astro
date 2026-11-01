@@ -1,0 +1,570 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import TOC, { type HeadingItem } from '../components/TOC.astro';
+import ReviewScoreCard from '../components/ReviewScoreCard.astro';
+import AffButton from '../components/AffButton.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  headings: HeadingItem[];
+}
+
+const { post, headings } = Astro.props;
+const { data, slug } = post;
+
+// 分类名称映射
+const categoryNames: Record<string, string> = {
+  reviews: '品牌深度评测',
+  tutorials: '客户端实战教程',
+  guides: '选购科普指南'
+};
+
+const categoryTitle = categoryNames[data.category] || '博客文章';
+
+// 面包屑数据
+const breadcrumbItems = [
+  { title: '博客首页', href: '/' },
+  { title: categoryTitle, href: `/category/${data.category}` },
+  { title: data.title }
+];
+
+// 计算预计阅读时长与字数
+const wordCount = post.body.length;
+const readingTimeMin = Math.max(2, Math.ceil(wordCount / 400));
+
+// Schema.org Article 结构化数据
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": data.title,
+  "description": data.description,
+  "image": data.heroImage ? `https://noderadar.example.com${data.heroImage}` : undefined,
+  "datePublished": data.pubDate.toISOString(),
+  ...(data.updatedDate ? { "dateModified": data.updatedDate.toISOString() } : {}),
+  "author": {
+    "@type": "Person",
+    "name": data.author
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "NodeRadar 节点雷达"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": `https://noderadar.example.com/blog/${slug}`
+  }
+};
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.description}
+  keywords={data.tags}
+  ogType="article"
+  ogImage={data.heroImage}
+  publishedTime={data.pubDate.toISOString()}
+  modifiedTime={data.updatedDate?.toISOString()}
+  jsonLd={articleJsonLd}
+>
+  <div class="container post-container">
+    <Breadcrumb items={breadcrumbItems} />
+
+    <!-- 文章主标题与博主信息头 -->
+    <header class="blog-post-header">
+      <div class="post-header-badges">
+        <a href={`/category/${data.category}`} class="badge badge-cyan">
+          {categoryTitle}
+        </a>
+        {data.isFeatured && <span class="badge badge-gold">★ 推荐精选</span>}
+      </div>
+
+      <h1 class="post-headline">{data.title}</h1>
+      <p class="post-lead">{data.description}</p>
+
+      <!-- 博主信息条 (经典科技博客排版) -->
+      <div class="author-meta-bar">
+        <div class="author-cell">
+          <img src="/images/avatar.jpg" alt="博主头像" class="post-author-avatar" />
+          <div class="author-texts">
+            <span class="a-name">{data.author}</span>
+            <span class="a-title">资深网络架构师</span>
+          </div>
+        </div>
+        <div class="meta-divider"></div>
+        <div class="post-stat-cell">
+          <span class="s-label">发布时间</span>
+          <time datetime={data.pubDate.toISOString()} class="s-val">
+            {data.pubDate.toISOString().slice(0, 10)}
+          </time>
+        </div>
+        <div class="meta-divider"></div>
+        <div class="post-stat-cell">
+          <span class="s-label">全文字数</span>
+          <span class="s-val">约 {wordCount} 字</span>
+        </div>
+        <div class="meta-divider"></div>
+        <div class="post-stat-cell">
+          <span class="s-label">预计阅读</span>
+          <span class="s-val text-cyan">约 {readingTimeMin} 分钟</span>
+        </div>
+      </div>
+
+      <!-- 题图 Cover Image -->
+      {data.heroImage && (
+        <div class="post-hero-image-wrap glass-card">
+          <img src={data.heroImage} alt={data.title} class="post-hero-image" />
+        </div>
+      )}
+    </header>
+
+    <!-- 文章主体与侧边栏两栏网格 -->
+    <div class="post-layout-grid">
+      <!-- 左侧：博客主正文区 -->
+      <article class="post-main-content">
+        <!-- 如果是评测文章：优先展示高转化打分看板 -->
+        {data.reviewData && (
+          <ReviewScoreCard
+            brandName={data.reviewData.brandName}
+            overallScore={data.reviewData.overallScore}
+            starRating={data.reviewData.starRating}
+            lineType={data.reviewData.lineType}
+            entryPrice={data.reviewData.entryPrice}
+            trafficRange={data.reviewData.trafficRange}
+            protocols={data.reviewData.protocols}
+            streamingUnlockRate={data.reviewData.streamingUnlockRate}
+            officialUrlPlaceholder={data.reviewData.officialUrlPlaceholder}
+            couponCode={data.reviewData.couponCode}
+            pros={data.reviewData.pros}
+            cons={data.reviewData.cons}
+            bestFor={data.reviewData.bestFor}
+          />
+        )}
+
+        <!-- 如果是教程文章：展示运行环境卡片 -->
+        {data.tutorialData && (
+          <div class="tutorial-env-card glass-card">
+            <div class="env-item">
+              <span class="env-label">适用客户端：</span>
+              <span class="env-val text-cyan">{data.tutorialData.client || '通用客户端'}</span>
+            </div>
+            <div class="env-item">
+              <span class="env-label">支持平台：</span>
+              <span class="env-val">{data.tutorialData.platform?.join(' / ') || '多平台通用'}</span>
+            </div>
+            <div class="env-item">
+              <span class="env-label">教程难度：</span>
+              <span class="env-val text-gold">{data.tutorialData.difficulty}</span>
+            </div>
+          </div>
+        )}
+
+        <!-- Markdown 正文渲染区 -->
+        <div class="prose">
+          <slot />
+        </div>
+
+        <!-- 博客底部版权与免责说明框 -->
+        <div class="post-copyright-box glass-card">
+          <h4>NodeRadar 博客文章声明</h4>
+          <p>
+            <strong>本文标题：</strong>{data.title}<br />
+            <strong>本文链接：</strong><a href={`https://noderadar.example.com/blog/${slug}`}>https://noderadar.example.com/blog/{slug}</a><br />
+            <strong>版权声明：</strong>本文由 {data.author} 原创发布于 NodeRadar 博客，严禁未经授权的商业性抄袭。测速数据均为真实抓包记录，欢迎技术交流。
+          </p>
+        </div>
+
+        <!-- 底部行动呼吁 CTA -->
+        <div class="post-bottom-cta glass-card">
+          <div class="cta-inner">
+            <div class="cta-text">
+              <h3>找不到满意的高速稳定专线？</h3>
+              <p>查看 NodeRadar 实验室最新 2026 晚高峰测速天梯榜，客观挑选适合你的专线方案。</p>
+            </div>
+            <div class="cta-actions">
+              <a href="/#rankings" class="btn btn-primary">查看 2026 机场总榜</a>
+              {data.reviewData && (
+                <AffButton
+                  href={data.reviewData.officialUrlPlaceholder}
+                  label={`直达 ${data.reviewData.brandName}`}
+                  variant="gold"
+                />
+              )}
+            </div>
+          </div>
+        </div>
+
+        <!-- 底部上一篇 / 返回首页导航 -->
+        <div class="post-nav-row">
+          <a href="/" class="btn btn-secondary btn-sm">&larr; 返回博客首页</a>
+          <a href="/reviews" class="btn btn-secondary btn-sm">查看更多深度评测 &rarr;</a>
+        </div>
+      </article>
+
+      <!-- 右侧：侧边栏（吸顶 TOC + 推广挂件） -->
+      <aside class="post-sidebar">
+        <!-- 侧边栏转化挂件 -->
+        <div class="sidebar-box glass-card aff-sidebar-widget">
+          <span class="widget-badge">
+            <span class="pulse-dot"></span> 官方合作通道
+          </span>
+          <h4 class="widget-title">
+            {data.reviewData ? `${data.reviewData.brandName} 专属通道` : '今日高稳专线推荐 · 可信云'}
+          </h4>
+          <p class="widget-desc">
+            {data.reviewData ? '全物理 IEPL 内网专线，晚高峰 4K 极速秒开，支持支付宝/微信即时开通。' : '站长主推旗舰：全物理 IEPL 纯专线，原生双 ISP，晚高峰 4K 极速秒开，支持支付宝/微信即时开通。'}
+          </p>
+          <div class="widget-coupon">
+            <span>专属折扣码：</span>
+            <code>{data.reviewData?.couponCode || 'kxy80'}</code>
+          </div>
+          <AffButton
+            href={data.reviewData?.officialUrlPlaceholder || 'https://yp76688.kosingaff.com/#/register?code=MuizUDqY'}
+            variant="gold"
+            label={data.reviewData ? `直达 ${data.reviewData.brandName} 官方通道` : '直达可信云官方注册通道'}
+            class="widget-btn"
+          />
+          <span class="widget-tip">★ 7天无理由或工单快速退款保障</span>
+        </div>
+
+        <!-- 目录导航 TOC -->
+        <TOC headings={headings} />
+
+        <!-- 热门标签 -->
+        <div class="sidebar-box glass-card">
+          <h5 class="notice-title">🏷️ 本文相关标签</h5>
+          <div class="post-tags-list">
+            {data.tags.map(t => (
+              <span class="p-tag">#{t}</span>
+            ))}
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .post-container {
+    padding-top: 1.5rem;
+    padding-bottom: 4rem;
+  }
+
+  /* 文章头区域 */
+  .blog-post-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .post-header-badges {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .post-headline {
+    font-size: 2.45rem;
+    font-weight: 850;
+    line-height: 1.28;
+    color: #ffffff;
+    letter-spacing: -0.025em;
+    margin-bottom: 1rem;
+  }
+
+  .post-lead {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    max-width: 900px;
+  }
+
+  /* 博主信息栏 */
+  .author-meta-bar {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: rgba(14, 20, 36, 0.7);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 1.25rem;
+    margin-bottom: 1.75rem;
+    flex-wrap: wrap;
+  }
+
+  .author-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .post-author-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 2px solid var(--accent-cyan);
+  }
+
+  .author-texts {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .a-name {
+    font-size: 0.92rem;
+    font-weight: 750;
+    color: #ffffff;
+  }
+
+  .a-title {
+    font-size: 0.72rem;
+    color: var(--text-dim);
+  }
+
+  .meta-divider {
+    width: 1px;
+    height: 28px;
+    background: var(--border-light);
+  }
+
+  .post-stat-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .s-label {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+  }
+
+  .s-val {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #ffffff;
+  }
+
+  /* 题图 */
+  .post-hero-image-wrap {
+    overflow: hidden;
+    height: 380px;
+    border-radius: var(--radius-lg);
+  }
+
+  .post-hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* 主体双栏 */
+  .post-layout-grid {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 2.5rem;
+    align-items: flex-start;
+  }
+
+  .post-main-content {
+    min-width: 0;
+  }
+
+  .tutorial-env-card {
+    display: flex;
+    gap: 1.5rem;
+    padding: 1rem 1.25rem;
+    margin-bottom: 2rem;
+    font-size: 0.88rem;
+    border-color: rgba(52, 211, 153, 0.3);
+  }
+
+  .env-item {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .env-label { color: var(--text-dim); }
+  .env-val { font-weight: 600; color: #ffffff; }
+
+  /* 版权说明卡片 */
+  .post-copyright-box {
+    margin: 3rem 0 2rem;
+    padding: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  .post-copyright-box h4 {
+    font-size: 0.95rem;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+  }
+
+  .post-copyright-box a {
+    color: var(--accent-cyan);
+    word-break: break-all;
+  }
+
+  .post-bottom-cta {
+    margin-top: 2rem;
+    padding: 2rem;
+    border-color: rgba(56, 189, 248, 0.3);
+    background: linear-gradient(135deg, rgba(14, 20, 36, 0.9) 0%, rgba(20, 32, 56, 0.95) 100%);
+  }
+
+  .cta-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .cta-text h3 {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 0.4rem;
+  }
+
+  .cta-text p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .post-nav-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-light);
+  }
+
+  /* 侧边栏 */
+  .post-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    position: sticky;
+    top: 85px;
+  }
+
+  .sidebar-box {
+    padding: 1.25rem;
+  }
+
+  .aff-sidebar-widget {
+    border-color: rgba(251, 191, 36, 0.35);
+    background: linear-gradient(180deg, rgba(20, 30, 52, 0.85) 0%, rgba(10, 15, 26, 0.95) 100%);
+  }
+
+  .widget-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.72rem;
+    color: var(--accent-gold);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .widget-title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 0.4rem;
+  }
+
+  .widget-desc {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 0.85rem;
+  }
+
+  .widget-coupon {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    margin-bottom: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .widget-coupon code {
+    background: rgba(251, 191, 36, 0.15);
+    color: #fbbf24;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+
+  .widget-btn :global(.btn) {
+    width: 100%;
+  }
+
+  .widget-tip {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    text-align: center;
+    margin-top: 0.5rem;
+  }
+
+  .notice-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.65rem;
+  }
+
+  .post-tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .p-tag {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    background: rgba(255, 255, 255, 0.04);
+    padding: 0.2rem 0.55rem;
+    border-radius: var(--radius-sm);
+  }
+
+  @media (max-width: 960px) {
+    .post-layout-grid {
+      grid-template-columns: 1fr;
+    }
+    .post-headline {
+      font-size: 1.85rem;
+    }
+    .post-hero-image-wrap {
+      height: 240px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .author-meta-bar {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+    .meta-divider {
+      display: none;
+    }
+  }
+</style>

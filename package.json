@@ -1,0 +1,17 @@
+{
+  "name": "noderadar-blog",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "专业网络节点评测与跨境办公技术博客框架",
+  "scripts": {
+    "dev": "astro dev --host",
+    "start": "astro dev --host",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^4.15.0"
+  }
+}

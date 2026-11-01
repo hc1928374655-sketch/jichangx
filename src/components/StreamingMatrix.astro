@@ -1,0 +1,155 @@
+---
+interface StreamService {
+  name: string;
+  category: string;
+  status: 'perfect' | 'normal' | 'partial' | 'unsupported';
+  resolution: string;
+  note: string;
+}
+
+interface Props {
+  services?: StreamService[];
+}
+
+const defaultServices: StreamService[] = [
+  { name: 'Netflix', category: '流媒体', status: 'perfect', resolution: '4K Ultra HD', note: '原生非自制剧完整解锁，秒加载' },
+  { name: 'Disney+', category: '流媒体', status: 'perfect', resolution: '4K HDR / IMAX', note: '多区域原生内容无阻断' },
+  { name: 'YouTube Premium', category: '视频', status: 'perfect', resolution: '4K 60FPS / 8K', note: '后台免广告，支持画中画' },
+  { name: 'OpenAI ChatGPT', category: 'AI 工具', status: 'perfect', resolution: 'GPT-4o / Plus', note: '双向住宅 ISP，无拒绝访问报错' },
+  { name: 'Claude 3.5 Sonnet', category: 'AI 工具', status: 'perfect', resolution: '网页与 API', note: '低欺诈评分原生住宅落地' },
+  { name: 'TikTok', category: '社媒', status: 'perfect', resolution: '原生免拔卡', note: '日韩/美区无黑屏无降权' },
+  { name: 'Spotify', category: '音乐', status: 'perfect', resolution: '极高音质', note: '免换区直接登录畅听' },
+  { name: 'DMM / FANZA', category: '日本流媒体', status: 'normal', resolution: '1080P+', note: '日本专属原生节点支持' }
+];
+
+const { services = defaultServices } = Astro.props;
+
+const statusConfig = {
+  perfect: { text: '完美解锁', badgeClass: 'badge-emerald', icon: '✓' },
+  normal: { text: '支持流畅', badgeClass: 'badge-cyan', icon: '●' },
+  partial: { text: '部分支持', badgeClass: 'badge-gold', icon: '▲' },
+  unsupported: { text: '暂不支持', badgeClass: 'badge-rose', icon: '✕' }
+};
+---
+
+<div class="streaming-matrix-wrap glass-card">
+  <div class="matrix-header">
+    <div class="matrix-title-group">
+      <span class="badge badge-emerald">实机测试环境</span>
+      <h3 class="matrix-title">主流流媒体与 AI 平台解锁测试矩阵</h3>
+    </div>
+    <span class="matrix-meta">测试设备：Apple TV 4K / Mac Studio / iPhone 15 Pro</span>
+  </div>
+
+  <div class="matrix-grid">
+    {services.map(s => {
+      const cfg = statusConfig[s.status];
+      return (
+        <div class="matrix-card">
+          <div class="service-top">
+            <span class="service-name">{s.name}</span>
+            <span class={`badge ${cfg.badgeClass}`}>{cfg.icon} {cfg.text}</span>
+          </div>
+          <div class="service-spec">
+            <span class="res-tag">{s.resolution}</span>
+            <span class="cat-tag">{s.category}</span>
+          </div>
+          <p class="service-note">{s.note}</p>
+        </div>
+      );
+    })}
+  </div>
+</div>
+
+<style>
+  .streaming-matrix-wrap {
+    margin: 2rem 0;
+    padding: 1.75rem;
+  }
+
+  .matrix-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-light);
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .matrix-title {
+    font-size: 1.25rem;
+    font-weight: 750;
+    color: #ffffff;
+    margin-top: 0.35rem;
+  }
+
+  .matrix-meta {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+  }
+
+  .matrix-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .matrix-card {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .service-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .service-name {
+    font-weight: 700;
+    color: #ffffff;
+    font-size: 0.95rem;
+  }
+
+  .service-spec {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.75rem;
+  }
+
+  .res-tag {
+    color: var(--accent-cyan);
+    font-weight: 600;
+  }
+
+  .cat-tag {
+    color: var(--text-dim);
+  }
+
+  .service-note {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+    margin: 0;
+  }
+
+  @media (max-width: 900px) {
+    .matrix-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 500px) {
+    .matrix-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

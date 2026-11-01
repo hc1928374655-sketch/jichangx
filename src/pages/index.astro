@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FeaturedShowcase from '../components/FeaturedShowcase.astro';
+import { getCollection } from 'astro:content';
+
+// 获取所有文章并按时间倒序排序
+const allPosts = await getCollection('blog');
+const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout>
+  <!-- 博客首页精选头条展台 (杂志风格) -->
+  <FeaturedShowcase posts={sortedPosts} />
+</BaseLayout>

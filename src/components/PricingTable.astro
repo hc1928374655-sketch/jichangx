@@ -1,0 +1,231 @@
+---
+import AffButton from './AffButton.astro';
+
+interface Plan {
+  name: string;
+  price: string;
+  period: string;
+  traffic: string;
+  speed: string;
+  devices: string;
+  popular?: boolean;
+  features: string[];
+  affUrl?: string;
+}
+
+interface Props {
+  plans?: Plan[];
+  brandName?: string;
+}
+
+const defaultPlans: Plan[] = [
+  {
+    name: "基础尝鲜版",
+    price: "¥19.9",
+    period: "/ 月",
+    traffic: "120 GB",
+    speed: "500 Mbps 专线带宽",
+    devices: "不限设备同时在线",
+    popular: false,
+    features: ["覆盖主流港/日/美/新节点", "全节点 IEPL 专线保障", "4K 流媒体基础解锁", "支持工单一对一支持"]
+  },
+  {
+    name: "标准畅享版 (推荐)",
+    price: "¥38.8",
+    period: "/ 月",
+    traffic: "300 GB",
+    speed: "1000 Mbps 极速专线",
+    devices: "不限设备同时在线",
+    popular: true,
+    features: ["涵盖 40+ 全球精品原生落地", "原生双ISP住宅IP支持", "ChatGPT / TikTok 优先通道", "晚高峰专属大带宽保障"]
+  },
+  {
+    name: "尊享极客版",
+    price: "¥76.0",
+    period: "/ 月",
+    traffic: "800 GB",
+    speed: "2000 Mbps 物理直连",
+    devices: "不限设备同时在线",
+    popular: false,
+    features: ["全节点冷门小众国家全解锁", "专属企业级 SLA 保障", "定制防封锁加密混淆协议", "7x24小时专属技术加急群"]
+  }
+];
+
+const { plans = defaultPlans, brandName = "服务商" } = Astro.props;
+---
+
+<div class="pricing-table-wrap">
+  <div class="plans-grid">
+    {plans.map((p) => (
+      <div class={`plan-card glass-card ${p.popular ? 'plan-popular' : ''}`}>
+        {p.popular && (
+          <div class="popular-tag">最受欢迎 / 性价比首选</div>
+        )}
+        <h4 class="plan-name">{p.name}</h4>
+        <div class="plan-price-wrap">
+          <span class="price-currency">{p.price}</span>
+          <span class="price-period">{p.period}</span>
+        </div>
+
+        <div class="plan-specs-summary">
+          <div class="spec-row">
+            <span class="s-label">每月流量：</span>
+            <span class="s-val text-cyan">{p.traffic}</span>
+          </div>
+          <div class="spec-row">
+            <span class="s-label">峰值速率：</span>
+            <span class="s-val">{p.speed}</span>
+          </div>
+          <div class="spec-row">
+            <span class="s-label">设备限制：</span>
+            <span class="s-val text-emerald">{p.devices}</span>
+          </div>
+        </div>
+
+        <ul class="plan-features-list">
+          {p.features.map(f => (
+            <li>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>{f}</span>
+            </li>
+          ))}
+        </ul>
+
+        <div class="plan-cta">
+          <AffButton
+            href={p.affUrl}
+            variant={p.popular ? 'gold' : 'secondary'}
+            label={`立即订购 ${p.name}`}
+            brandName={brandName}
+            class="plan-btn-full"
+          />
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .pricing-table-wrap {
+    margin: 2.5rem 0;
+  }
+
+  .plans-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .plan-card {
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .plan-popular {
+    border-color: rgba(251, 191, 36, 0.45);
+    background: linear-gradient(180deg, rgba(24, 34, 60, 0.85) 0%, rgba(12, 17, 30, 0.95) 100%);
+    transform: scale(1.02);
+    box-shadow: 0 10px 30px -5px rgba(251, 191, 36, 0.15);
+  }
+
+  .popular-tag {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--grad-gold);
+    color: #0b0f19;
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 0.2rem 0.8rem;
+    border-radius: var(--radius-full);
+    white-space: nowrap;
+    letter-spacing: 0.04em;
+  }
+
+  .plan-name {
+    font-size: 1.15rem;
+    font-weight: 750;
+    color: #ffffff;
+    margin-bottom: 0.85rem;
+    text-align: center;
+  }
+
+  .plan-price-wrap {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .price-currency {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--accent-gold);
+    letter-spacing: -0.02em;
+  }
+
+  .price-period {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    margin-left: 0.25rem;
+  }
+
+  .plan-specs-summary {
+    background: rgba(0, 0, 0, 0.25);
+    padding: 0.85rem 1rem;
+    border-radius: var(--radius-sm);
+    margin-bottom: 1.25rem;
+    font-size: 0.82rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .spec-row {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .s-label { color: var(--text-dim); }
+  .s-val { font-weight: 600; color: #ffffff; }
+
+  .text-cyan { color: var(--accent-cyan); }
+  .text-emerald { color: var(--accent-emerald); }
+
+  .plan-features-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    flex: 1;
+  }
+
+  .plan-features-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.45rem;
+    font-size: 0.85rem;
+    color: var(--text-main);
+    line-height: 1.45;
+  }
+
+  .plan-cta :global(.btn) {
+    width: 100%;
+  }
+
+  @media (max-width: 900px) {
+    .plans-grid {
+      grid-template-columns: 1fr;
+    }
+    .plan-popular {
+      transform: none;
+    }
+  }
+</style>

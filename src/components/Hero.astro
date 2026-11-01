@@ -1,0 +1,197 @@
+---
+import { siteConfig } from '../config/site';
+---
+
+<section class="hero-section">
+  <div class="hero-ambient-glow"></div>
+  <div class="container hero-container">
+    <!-- 顶部醒目标签 -->
+    <div class="hero-badge-wrap">
+      <div class="badge badge-cyan">
+        <span class="pulse-dot"></span>
+        <span>2026 深度实测 · 纯净专线网络实验室</span>
+      </div>
+    </div>
+
+    <!-- 主标题 -->
+    <h1 class="hero-title">
+      寻找真正稳定、<span class="gradient-text">晚高峰不卡顿</span> 的<br />
+      全球高速网络专线与流媒体节点
+    </h1>
+
+    <!-- 副标题 -->
+    <p class="hero-description">
+      告别玄学测速与虚标带宽。NodeRadar 实验室全天候 24 小时监测主流机场线路丢包率、
+      Netflix / Disney+ / ChatGPT 4K 原生解锁率与客户端分流配置，为您提供客观的选购横评。
+    </p>
+
+    <!-- 快速搜索/标签导航 -->
+    <div class="hero-quick-tags">
+      <span class="tag-label">快速选购专题：</span>
+      <a href="/category/reviews" class="hero-tag">🔥 IEPL 纯专线推荐</a>
+      <a href="/category/guides" class="hero-tag">🎬 Netflix 4K 秒开</a>
+      <a href="/category/guides" class="hero-tag">🤖 ChatGPT 原生双ISP</a>
+      <a href="/category/reviews" class="hero-tag">⚡ 按量付费不限时</a>
+      <a href="/category/tutorials" class="hero-tag">📱 Clash / Sing-box 教程</a>
+    </div>
+
+    <!-- 关键指标看板 -->
+    <div class="hero-stats-grid">
+      <div class="stat-card glass-card">
+        <div class="stat-value text-cyan">99.8%</div>
+        <div class="stat-label">晚高峰专线可用率</div>
+        <div class="stat-sub">多地 BGP 入口实时监测</div>
+      </div>
+      <div class="stat-card glass-card">
+        <div class="stat-value text-emerald">&lt; 35ms</div>
+        <div class="stat-label">香港/日韩低延迟</div>
+        <div class="stat-sub">内网直连不绕路</div>
+      </div>
+      <div class="stat-card glass-card">
+        <div class="stat-value text-gold">4K / 8K</div>
+        <div class="stat-label">流媒体秒开支持</div>
+        <div class="stat-sub">原生住宅/双ISP IP覆盖</div>
+      </div>
+      <div class="stat-card glass-card">
+        <div class="stat-value text-purple">100%</div>
+        <div class="stat-label">真实验证打分</div>
+        <div class="stat-sub">拒绝虚标，实测说话</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    position: relative;
+    padding: 4.5rem 0 3.5rem;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .hero-ambient-glow {
+    position: absolute;
+    top: -120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 680px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.18) 0%, rgba(99, 102, 241, 0.08) 45%, transparent 70%);
+    filter: blur(50px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero-container {
+    position: relative;
+    z-index: 1;
+    max-width: 960px;
+  }
+
+  .hero-badge-wrap {
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-title {
+    font-size: 2.75rem;
+    font-weight: 850;
+    line-height: 1.25;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+    margin-bottom: 1.25rem;
+  }
+
+  .gradient-text {
+    background: var(--grad-brand);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-description {
+    font-size: 1.12rem;
+    color: var(--text-muted);
+    max-width: 760px;
+    margin: 0 auto 2rem;
+    line-height: 1.75;
+  }
+
+  .hero-quick-tags {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-bottom: 3.25rem;
+    font-size: 0.88rem;
+  }
+
+  .tag-label {
+    color: var(--text-dim);
+    font-weight: 600;
+  }
+
+  .hero-tag {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-light);
+    color: var(--text-main);
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-full);
+    transition: all 0.2s ease;
+  }
+
+  .hero-tag:hover {
+    border-color: var(--border-accent);
+    color: var(--accent-cyan);
+    background: rgba(56, 189, 248, 0.08);
+    transform: translateY(-1px);
+  }
+
+  .hero-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+
+  .stat-card {
+    padding: 1.5rem 1rem;
+    text-align: center;
+    border-radius: var(--radius-lg);
+  }
+
+  .stat-value {
+    font-size: 1.95rem;
+    font-weight: 850;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 0.35rem;
+  }
+
+  .text-cyan { color: var(--accent-cyan); }
+  .text-emerald { color: var(--accent-emerald); }
+  .text-gold { color: var(--accent-gold); }
+  .text-purple { color: #c084fc; }
+
+  .stat-label {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 0.2rem;
+  }
+
+  .stat-sub {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  @media (max-width: 768px) {
+    .hero-title {
+      font-size: 1.95rem;
+    }
+    .hero-description {
+      font-size: 0.98rem;
+    }
+    .hero-stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

@@ -1,0 +1,160 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog');
+const tutorialPosts = allPosts.filter(p => p.data.category === 'tutorials');
+
+const breadcrumbItems = [
+  { title: '首页', href: '/' },
+  { title: '客户端实战教程' }
+];
+
+const clientPlatforms = [
+  { name: 'Windows 平台', desc: '首选 Clash Verge Rev / Sing-box / Netch', icon: '💻', tag: '电脑端' },
+  { name: 'macOS 平台', desc: '首选 Clash Verge Rev (ARM/Intel) / Surge', icon: '🍎', tag: '苹果端' },
+  { name: 'iOS / iPadOS', desc: '首选 Shadowrocket (小火箭) / Loon / Quantumult X', icon: '📱', tag: '移动端' },
+  { name: 'Android 安卓', desc: '首选 Clash Meta for Android / Sing-box / Surfboard', icon: '🤖', tag: '安卓端' }
+];
+---
+
+<BaseLayout
+  title="客户端保姆级配置教程合集"
+  description="全平台科学上网代理客户端配置教程：Clash Verge Rev、Sing-box、Shadowrocket 小火箭一键导入与规则分流优化。"
+>
+  <div class="container archive-container">
+    <Breadcrumb items={breadcrumbItems} />
+
+    <header class="archive-header">
+      <span class="section-tag">手把手教学</span>
+      <h1 class="archive-title">全平台客户端实战配置指南</h1>
+      <p class="archive-desc">
+        无论你是初次接触节点的新手小白，还是追求极客分流规则的资深玩家，这里都能找到适合你设备的极速导入与优化指南。
+      </p>
+    </header>
+
+    <!-- 平台分类卡片索引 -->
+    <div class="platform-grid">
+      {clientPlatforms.map(p => (
+        <div class="platform-card glass-card">
+          <div class="p-icon">{p.icon}</div>
+          <div class="p-info">
+            <span class="badge badge-emerald">{p.tag}</span>
+            <h4>{p.name}</h4>
+            <p>{p.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- 教程文章网格 -->
+    <div class="posts-section">
+      <h2 class="section-subheading">精选图文教程列表</h2>
+      <div class="posts-grid">
+        {tutorialPosts.map(post => (
+          <PostCard post={post} />
+        ))}
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .archive-container {
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+  }
+
+  .archive-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .archive-title {
+    font-size: 2.25rem;
+    font-weight: 850;
+    color: #ffffff;
+    margin: 0.5rem 0 0.85rem;
+    letter-spacing: -0.02em;
+  }
+
+  .archive-desc {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    max-width: 800px;
+    line-height: 1.7;
+  }
+
+  .platform-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 3.5rem;
+  }
+
+  .platform-card {
+    padding: 1.5rem 1.25rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .p-icon {
+    font-size: 1.8rem;
+    line-height: 1;
+  }
+
+  .p-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .p-info h4 {
+    font-size: 1.05rem;
+    font-weight: 750;
+    color: #ffffff;
+    margin-top: 0.2rem;
+  }
+
+  .p-info p {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    line-height: 1.45;
+    margin: 0;
+  }
+
+  .section-subheading {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 960px) {
+    .platform-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .posts-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .platform-grid {
+      grid-template-columns: 1fr;
+    }
+    .posts-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

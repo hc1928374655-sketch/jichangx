@@ -1,0 +1,282 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  horizontal?: boolean;
+}
+
+const { post, horizontal = false } = Astro.props;
+const { data, slug } = post;
+
+// 分类名称映射
+const categoryMap: Record<string, { name: string; class: string }> = {
+  reviews: { name: '深度评测', class: 'badge-cyan' },
+  tutorials: { name: '实战教程', class: 'badge-emerald' },
+  guides: { name: '选购科普', class: 'badge-gold' }
+};
+
+const catInfo = categoryMap[data.category] || { name: '博客文章', class: 'badge-cyan' };
+
+// 格式化日期
+const formattedDate = new Intl.DateTimeFormat('zh-CN', {
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit'
+}).format(data.pubDate);
+
+// 估算阅读时间
+const wordCount = post.body.length;
+const readTime = Math.max(2, Math.ceil(wordCount / 400));
+
+// 计算特性属性，用于分类过滤
+const tags = data.tags || [];
+const tagStr = (tags.join(' ') + ' ' + data.title + ' ' + data.description).toLowerCase();
+const feats: string[] = [];
+if (tagStr.includes('iepl') || tagStr.includes('iplc') || tagStr.includes('专线')) feats.push('iepl');
+if (tagStr.includes('netflix') || tagStr.includes('4k') || tagStr.includes('流媒体')) feats.push('netflix');
+if (tagStr.includes('chatgpt') || tagStr.includes('双isp') || tagStr.includes('原生')) feats.push('chatgpt');
+if (tagStr.includes('按量') || tagStr.includes('不限时') || tagStr.includes('永久')) feats.push('ondemand');
+const featuresAttr = feats.join(' ');
+---
+
+<article class={`blog-post-card glass-card interactive-card ${horizontal ? 'layout-horizontal' : ''}`} data-category={data.category} data-features={featuresAttr}>
+  <a href={`./blog/${slug}/index.html`} class="card-link-wrapper">
+    <!-- 封面图区域 -->
+    {data.heroImage && (
+      <div class="card-image-box">
+        <img src={data.heroImage} alt={data.title} class="card-img" loading="lazy" />
+        <span class={`card-category-badge badge ${catInfo.class}`}>{catInfo.name}</span>
+      </div>
+    )}
+
+    <!-- 内容主体区 -->
+    <div class="card-content">
+      <div class="card-meta-top">
+        {!data.heroImage && <span class={`badge ${catInfo.class}`}>{catInfo.name}</span>}
+        <time datetime={data.pubDate.toISOString()} class="meta-date">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          {formattedDate}
+        </time>
+        <span class="meta-read-time">约 {readTime} 分钟阅读</span>
+      </div>
+
+      <h3 class="card-title">{data.title}</h3>
+
+      <p class="card-excerpt">{data.description}</p>
+
+      <!-- 评测文章特有徽章 -->
+      {data.reviewData && (
+        <div class="card-spec-pills">
+          <span class="spec-pill pill-cyan">⚡ {data.reviewData.lineType || '专线'}</span>
+          <span class="spec-pill pill-gold">★ {data.reviewData.overallScore || 9.5} 分</span>
+          <span class="spec-pill pill-emerald">{data.reviewData.entryPrice || '月付实惠'}</span>
+        </div>
+      )}
+
+      <!-- 对比文章特有徽章 -->
+      {data.comparisonData && (
+        <div class="card-spec-pills">
+          <span class="spec-pill pill-purple">VS 对决: {data.comparisonData.itemA} ✕ {data.comparisonData.itemB}</span>
+        </div>
+      )}
+
+      <!-- 教程文章特有徽章 -->
+      {data.tutorialData && (
+        <div class="card-spec-pills">
+          <span class="spec-pill pill-emerald">💻 客户端: {data.tutorialData.client}</span>
+          <span class="spec-pill pill-cyan">难度: {data.tutorialData.difficulty}</span>
+        </div>
+      )}
+
+      <!-- 卡片底部标签与进入箭头 -->
+      <div class="card-footer-row">
+        <div class="card-tags">
+          {data.tags.slice(0, 3).map(tag => (
+            <span class="tag-item">#{tag}</span>
+          ))}
+        </div>
+        <span class="read-action">
+          <span>阅读正文</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </span>
+      </div>
+    </div>
+  </a>
+</article>
+
+<style>
+  .blog-post-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .card-link-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* 图片区域 */
+  .card-image-box {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    background: #0d121f;
+  }
+
+  .card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+  }
+
+  .blog-post-card:hover .card-img {
+    transform: scale(1.05);
+  }
+
+  .card-category-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  /* 内容区域 */
+  .card-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .card-meta-top {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    margin-bottom: 0.75rem;
+  }
+
+  .meta-date {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: 750;
+    color: #ffffff;
+    line-height: 1.35;
+    margin-bottom: 0.65rem;
+    letter-spacing: -0.015em;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .blog-post-card:hover .card-title {
+    color: var(--accent-cyan);
+  }
+
+  .card-excerpt {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 1.1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex: 1;
+  }
+
+  .card-spec-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.1rem;
+  }
+
+  .spec-pill {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+  }
+
+  .pill-cyan { background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
+  .pill-gold { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
+  .pill-emerald { background: rgba(52, 211, 153, 0.15); color: #34d399; }
+  .pill-purple { background: rgba(168, 85, 247, 0.15); color: #c084fc; }
+
+  .card-footer-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.85rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 0.78rem;
+  }
+
+  .card-tags {
+    display: flex;
+    gap: 0.45rem;
+    color: var(--text-dim);
+  }
+
+  .tag-item {
+    font-size: 0.75rem;
+  }
+
+  .read-action {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--accent-cyan);
+    font-weight: 600;
+  }
+
+  .blog-post-card:hover .read-action svg {
+    transform: translateX(3px);
+  }
+
+  /* 横版大卡片布局 (用于 Feed 主列表) */
+  .layout-horizontal .card-link-wrapper {
+    flex-direction: row;
+  }
+
+  .layout-horizontal .card-image-box {
+    width: 280px;
+    height: auto;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 768px) {
+    .layout-horizontal .card-link-wrapper {
+      flex-direction: column;
+    }
+    .layout-horizontal .card-image-box {
+      width: 100%;
+      height: 190px;
+    }
+  }
+</style>

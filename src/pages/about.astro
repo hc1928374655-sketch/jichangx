@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+
+const breadcrumbItems = [
+  { title: '首页', href: '/' },
+  { title: '关于本站与实验室' }
+];
+---
+
+<BaseLayout
+  title="关于本站与实验室测试方法"
+  description="了解 NodeRadar 节点雷达实验室的测评准则、测试设备环境与数据采集方法。"
+>
+  <div class="container page-container">
+    <Breadcrumb items={breadcrumbItems} />
+
+    <header class="page-header">
+      <span class="section-tag">实验室背景</span>
+      <h1 class="page-title">关于 NodeRadar 评测实验室</h1>
+      <p class="page-subtitle">客观中立 · 拒绝玄学 · 数据实测 · 纯净导向</p>
+    </header>
+
+    <div class="prose page-body glass-card">
+      <h2>1. 创立初衷</h2>
+      <p>
+        在跨境网络与科学上网生态中，信息极度不对称：市面上充斥着大量虚假宣传的“万兆专线”、“9块9包年神话”，许多用户在购买后往往遭遇频繁断流、晚高峰严重降速甚至商家卷款跑路。
+      </p>
+      <p>
+        <strong>NodeRadar (节点雷达)</strong> 由一群资深网络系统工程师与跨境数字游民创立，旨在建立一套<strong>标准化、透明化、可量化</strong>的专线评测体系，帮助每一位有跨境办公、学术科研与流媒体娱乐需求的朋友客观避坑。
+      </p>
+
+      <h2>2. 实验室硬件与测试网络环境</h2>
+      <p>为了保证数据的真实性与复现性，我们的自动化监控节点部署在以下真实生产环境中：</p>
+      <ul>
+        <li><strong>骨干网探针</strong>：华南（广州/深圳电信千兆）、华东（上海联通500M）、华北（北京移动千兆）；</li>
+        <li><strong>流媒体终端</strong>：Apple TV 4K（tvOS 最新版）、Mac Studio M2 Ultra、iPhone 15 Pro；</li>
+        <li><strong>测试频次</strong>：全天候 24 小时每隔 30 分钟轮询握手延迟，并在晚间 20:00 - 23:00 黄金拥堵段进行全带宽吞吐量压测。</li>
+      </ul>
+
+      <h2>3. 评测打分体系模型</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>评测考核维度</th>
+            <th>权重占比</th>
+            <th>核心考核点</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>晚高峰稳定性 (SLA)</strong></td>
+            <td>35%</td>
+            <td>黄金高峰期丢包率（需&lt;0.5%）、Jitter延迟抖动是否平稳</td>
+          </tr>
+          <tr>
+            <td><strong>流媒体与AI解锁能力</strong></td>
+            <td>25%</td>
+            <td>Netflix/Disney+ 4K非自制剧播放、ChatGPT/Claude纯净度</td>
+          </tr>
+          <tr>
+            <td><strong>线路真实架构与带宽</strong></td>
+            <td>20%</td>
+            <td>是否为真实物理内网IEPL/IPLC、单线程下载吞吐峰值</td>
+          </tr>
+          <tr>
+            <td><strong>资费性价比与灵活性</strong></td>
+            <td>10%</td>
+            <td>单G流量成本、按月付款门槛、按量计费支持情况</td>
+          </tr>
+          <tr>
+            <td><strong>客户服务与运营历史</strong></td>
+            <td>10%</td>
+            <td>工单回复响应时长、退款政策条款、团队运营抗风险年限</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>4. 商业模式与中立性承诺</h2>
+      <p>
+        本站部分评测文章包含合规的合作伙伴专属链接（Affiliate Links）。我们郑重承诺：<strong>商业合作永远不会影响真实的测试打分</strong>。如果某家服务商在晚高峰出现大规模断流、虚假标注或严重服务降级，我们会在第一时间在榜单与报告中如实警告披露。
+      </p>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .page-container {
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+    max-width: 900px;
+  }
+
+  .page-header {
+    margin-bottom: 2rem;
+  }
+
+  .page-title {
+    font-size: 2.25rem;
+    font-weight: 850;
+    color: #ffffff;
+    margin: 0.5rem 0 0.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .page-subtitle {
+    font-size: 1.05rem;
+    color: var(--accent-cyan);
+    font-weight: 600;
+  }
+
+  .page-body {
+    padding: 2.5rem;
+  }
+
+  @media (max-width: 600px) {
+    .page-body {
+      padding: 1.5rem;
+    }
+  }
+</style>

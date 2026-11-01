@@ -1,0 +1,241 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog');
+const reviewPosts = allPosts.filter(p => p.data.category === 'reviews');
+
+const breadcrumbItems = [
+  { title: '首页', href: '/' },
+  { title: '品牌深度评测' }
+];
+---
+
+<BaseLayout
+  title="品牌深度评测专区"
+  description="客观深度的网络节点与专线服务商实机评测，包含晚高峰速率、4K流媒体解锁、原生双ISP测试与资费横评报告。"
+>
+  <div class="container archive-container">
+    <Breadcrumb items={breadcrumbItems} />
+
+    <header class="archive-header">
+      <span class="section-tag">实机测评库</span>
+      <h1 class="archive-title">品牌深度评测报告</h1>
+      <p class="archive-desc">
+        这里汇总了 NodeRadar 实验室针对各大主流及新锐机场服务商的详尽测评。我们坚持自费购入、多地运营商晚高峰实测，杜绝云评测与虚标宣传。
+      </p>
+
+      <div class="filter-pills">
+        <span class="pill-label">热门特性筛选：</span>
+        <button type="button" class="pill active" data-filter="all">全部评测</button>
+        <button type="button" class="pill" data-filter="iepl">IEPL 纯专线</button>
+        <button type="button" class="pill" data-filter="netflix">Netflix 4K 解锁</button>
+        <button type="button" class="pill" data-filter="chatgpt">ChatGPT 原生双ISP</button>
+        <button type="button" class="pill" data-filter="ondemand">按量不限时</button>
+      </div>
+    </header>
+
+    <div class="posts-grid">
+      {reviewPosts.map(post => (
+        <PostCard post={post} />
+      ))}
+    </div>
+
+    <!-- 底部测评标准披露卡片 -->
+    <div class="methodology-card glass-card">
+      <div class="card-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        </svg>
+      </div>
+      <div class="card-body">
+        <h3>NodeRadar 实验室评测基准</h3>
+        <p>
+          我们坚持采用千兆对称宽带、全国三网（电信/联通/移动）骨干网探针、在每日晚间 20:00 - 23:00 黄金高峰期采集丢包与速率数据，并使用 Apple TV 4K 及真实风控环境逐项测试流媒体解锁率。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script is:inline>
+    (function() {
+      function initFilter() {
+        var pills = document.querySelectorAll('.filter-pills .pill');
+        var cards = document.querySelectorAll('.posts-grid .blog-post-card');
+        var grid = document.querySelector('.posts-grid');
+        if (!pills.length || !cards.length) return;
+
+        function applyFilter(filterVal) {
+          pills.forEach(function(p) {
+            if (p.getAttribute('data-filter') === filterVal) {
+              p.classList.add('active');
+            } else {
+              p.classList.remove('active');
+            }
+          });
+
+          var visibleCount = 0;
+          cards.forEach(function(card) {
+            var feats = (card.getAttribute('data-features') || '').split(' ');
+            if (filterVal === 'all' || feats.indexOf(filterVal) !== -1) {
+              card.style.display = '';
+              card.style.opacity = '1';
+              visibleCount++;
+            } else {
+              card.style.display = 'none';
+            }
+          });
+
+          var noResult = document.getElementById('no-filter-result');
+          if (visibleCount === 0) {
+            if (!noResult) {
+              noResult = document.createElement('div');
+              noResult.id = 'no-filter-result';
+              noResult.style.cssText = 'grid-column: 1 / -1; padding: 3rem 1rem; text-align: center; color: var(--text-muted); font-size: 1rem;';
+              noResult.textContent = '暂无匹配该特性的机场评测';
+              grid.appendChild(noResult);
+            }
+            noResult.style.display = 'block';
+          } else if (noResult) {
+            noResult.style.display = 'none';
+          }
+        }
+
+        pills.forEach(function(pill) {
+          pill.addEventListener('click', function(e) {
+            e.preventDefault();
+            var val = this.getAttribute('data-filter');
+            if (history.replaceState) {
+              history.replaceState(null, '', '#' + val);
+            } else {
+              window.location.hash = val;
+            }
+            applyFilter(val);
+          });
+        });
+
+        var initialHash = (window.location.hash || '').replace('#', '');
+        if (initialHash && ['all', 'iepl', 'netflix', 'chatgpt', 'ondemand'].indexOf(initialHash) !== -1) {
+          applyFilter(initialHash);
+        }
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initFilter);
+      } else {
+        initFilter();
+      }
+    })();
+  </script>
+</BaseLayout>
+
+<style>
+  .archive-container {
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+  }
+
+  .archive-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .archive-title {
+    font-size: 2.25rem;
+    font-weight: 850;
+    color: #ffffff;
+    margin: 0.5rem 0 0.85rem;
+    letter-spacing: -0.02em;
+  }
+
+  .archive-desc {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    max-width: 800px;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .filter-pills {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  .pill-label {
+    color: var(--text-dim);
+    font-weight: 600;
+  }
+
+  .pill {
+    padding: 0.35rem 0.8rem;
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-light);
+    color: var(--text-main);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    font-size: 0.85rem;
+    outline: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pill.active, .pill:hover {
+    background: rgba(56, 189, 248, 0.15);
+    border-color: var(--border-accent);
+    color: var(--accent-cyan);
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 3.5rem;
+  }
+
+  .methodology-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 2rem;
+    border-color: rgba(56, 189, 248, 0.25);
+    background: linear-gradient(135deg, rgba(14, 20, 36, 0.8) 0%, rgba(20, 30, 52, 0.9) 100%);
+  }
+
+  .methodology-card h3 {
+    font-size: 1.25rem;
+    font-weight: 750;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+  }
+
+  .methodology-card p {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  @media (max-width: 960px) {
+    .posts-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .posts-grid {
+      grid-template-columns: 1fr;
+    }
+    .methodology-card {
+      flex-direction: column;
+    }
+  }
+</style>

@@ -1,0 +1,421 @@
+---
+import { siteConfig } from '../config/site';
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <!-- 顶部行业实时监控广播条 -->
+  <div class="top-announcement">
+    <div class="container top-announcement-inner">
+      <span class="live-status">
+        <span class="pulse-dot"></span>
+        <span class="status-text">网络监控中</span>
+      </span>
+      <span class="announcement-text">
+        <strong>[2026 晚高峰实测]</strong> 全网 28+ 家主流机场 IEPL/IPLC 专线稳定性与流媒体 4K 解锁速率监控已更新
+      </span>
+      <a href="/rankings" class="announcement-link">查看今日排行榜 &rarr;</a>
+    </div>
+  </div>
+
+  <!-- 主导航栏 -->
+  <nav class="nav-bar">
+    <div class="container nav-container">
+      <!-- 品牌 Logo -->
+      <a href="/" class="brand-logo" aria-label="NodeRadar 首页">
+        <div class="logo-icon-wrap">
+          <svg class="logo-svg" viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="20" r="18" stroke="rgba(56, 189, 248, 0.2)" stroke-width="2" />
+            <circle cx="20" cy="20" r="11" stroke="rgba(56, 189, 248, 0.5)" stroke-width="1.8" />
+            <circle cx="20" cy="20" r="4" fill="#38bdf8" />
+            <path d="M20 7 L20 20 L30 14" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">Node<span class="highlight">Radar</span></span>
+          <span class="brand-sub">节点雷达 · 极速评测</span>
+        </div>
+      </a>
+
+      <!-- 桌面端菜单项 -->
+      <div class="nav-links">
+        {siteConfig.navItems.map((item) => {
+          const isActive = currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
+          return (
+            <a href={item.href} class={`nav-item ${isActive ? 'active' : ''}`}>
+              <span>{item.title}</span>
+              {item.badge && <span class="nav-badge">{item.badge}</span>}
+            </a>
+          );
+        })}
+      </div>
+
+      <!-- 右侧快捷动作 -->
+      <div class="nav-actions">
+        <!-- 夜间/日间主题切换按钮 -->
+        <button id="theme-toggle" class="theme-toggle-btn" type="button" aria-label="切换夜间模式" title="点击开启夜间模式">
+          <span class="toggle-icon-wrap">
+            <svg class="sun-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <svg class="moon-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </span>
+          <span class="theme-toggle-label">夜间模式</span>
+        </button>
+
+        <a href="/blog/kexin-cloud-review" class="btn btn-primary btn-sm header-cta" title="站长主推：可信云 2026 旗舰专线">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+          <span>主推·可信云</span>
+        </a>
+
+        <!-- 移动端汉堡切换按钮 -->
+        <button id="mobile-toggle" class="mobile-toggle" aria-label="切换移动端导航" aria-expanded="false">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 移动端折叠菜单 -->
+    <div id="mobile-menu" class="mobile-menu hidden">
+      <div class="container mobile-menu-inner">
+        {siteConfig.navItems.map((item) => (
+          <a href={item.href} class="mobile-nav-item">
+            <span>{item.title}</span>
+            {item.badge && <span class="nav-badge">{item.badge}</span>}
+          </a>
+        ))}
+        <div class="mobile-actions">
+          <a href="/rankings" class="btn btn-primary btn-block">查看今日精选榜单</a>
+          <button id="mobile-theme-toggle" class="theme-toggle-btn mobile-theme-btn" type="button" style="width:100%;justify-content:center;margin-top:0.6rem;padding:0.65rem 1rem;">
+            <span class="toggle-icon-wrap">
+              <svg class="sun-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+              </svg>
+              <svg class="moon-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+              </svg>
+            </span>
+            <span class="theme-toggle-label">切换夜间模式</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<script>
+  // 移动端菜单切换逻辑
+  const toggleBtn = document.getElementById('mobile-toggle');
+  const menu = document.getElementById('mobile-menu');
+
+  if (toggleBtn && menu) {
+    toggleBtn.addEventListener('click', () => {
+      const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+      toggleBtn.setAttribute('aria-expanded', String(!isExpanded));
+      menu.classList.toggle('hidden');
+    });
+
+    // 点击链接后自动收起
+    const links = menu.querySelectorAll('a');
+    links.forEach(link => {
+      link.addEventListener('click', () => {
+        menu.classList.add('hidden');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // 夜间/日间模式切换逻辑 (首次打开默认浅色)
+  function initTheme() {
+    function getTheme() {
+      return localStorage.getItem('noderadar_theme') || 'light';
+    }
+    function updateThemeUI(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      const isDark = theme === 'dark';
+      const btns = document.querySelectorAll('#theme-toggle, #mobile-theme-toggle');
+      btns.forEach((btn) => {
+        const label = btn.querySelector('.theme-toggle-label');
+        if (label) {
+          if (btn.id === 'mobile-theme-toggle') {
+            label.textContent = isDark ? '日间模式 (取消夜间)' : '夜间模式 (开启暗色)';
+          } else {
+            label.textContent = isDark ? '日间模式' : '夜间模式';
+          }
+        }
+        btn.setAttribute('title', isDark ? '点击切换为日间模式' : '点击开启夜间模式');
+        btn.setAttribute('aria-label', isDark ? '切换日间模式' : '切换夜间模式');
+      });
+    }
+    function toggleTheme() {
+      const cur = getTheme();
+      const next = cur === 'dark' ? 'light' : 'dark';
+      try {
+        localStorage.setItem('noderadar_theme', next);
+      } catch(e) {}
+      updateThemeUI(next);
+    }
+
+    updateThemeUI(getTheme());
+    ['theme-toggle', 'mobile-theme-toggle'].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el && !el.dataset.bound) {
+        el.dataset.bound = 'true';
+        el.addEventListener('click', toggleTheme);
+      }
+    });
+  }
+  initTheme();
+  document.addEventListener('astro:after-swap', initTheme);
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(7, 10, 18, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .top-announcement {
+    background: linear-gradient(90deg, rgba(14, 20, 36, 0.95), rgba(20, 30, 52, 0.95));
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 0.8rem;
+    padding: 0.35rem 0;
+    color: var(--text-muted);
+  }
+
+  .top-announcement-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    text-align: center;
+  }
+
+  .live-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: rgba(52, 211, 153, 0.1);
+    border: 1px solid rgba(52, 211, 153, 0.25);
+    padding: 0.1rem 0.45rem;
+    border-radius: var(--radius-full);
+    font-size: 0.72rem;
+    color: var(--accent-emerald);
+    font-weight: 600;
+  }
+
+  .announcement-text strong {
+    color: var(--accent-cyan);
+  }
+
+  .announcement-link {
+    color: var(--accent-cyan);
+    font-weight: 600;
+  }
+  .announcement-link:hover {
+    text-decoration: underline;
+  }
+
+  .nav-bar {
+    position: relative;
+  }
+
+  .nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+
+  .brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .logo-icon-wrap {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(56, 189, 248, 0.08);
+    border-radius: 10px;
+    border: 1px solid rgba(56, 189, 248, 0.25);
+  }
+
+  .logo-svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .brand-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .brand-name {
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+    line-height: 1.15;
+  }
+
+  .brand-name .highlight {
+    background: var(--grad-brand);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .brand-sub {
+    font-size: 0.68rem;
+    color: var(--text-dim);
+    letter-spacing: 0.02em;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .nav-item {
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    position: relative;
+    padding: 0.4rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .nav-item:hover, .nav-item.active {
+    color: #ffffff;
+  }
+
+  .nav-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--accent-cyan);
+    border-radius: 2px;
+    box-shadow: 0 0 8px var(--accent-cyan);
+  }
+
+  .nav-badge {
+    font-size: 0.65rem;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    background: rgba(251, 191, 36, 0.2);
+    color: #fbbf24;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .mobile-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    padding: 6px;
+    cursor: pointer;
+  }
+
+  .mobile-toggle .bar {
+    width: 100%;
+    height: 2px;
+    background: var(--text-muted);
+    border-radius: 2px;
+    transition: all 0.2s ease;
+  }
+
+  .mobile-menu {
+    border-top: 1px solid var(--border-light);
+    background: #090e1a;
+    padding: 1rem 0;
+  }
+
+  .mobile-menu.hidden {
+    display: none;
+  }
+
+  .mobile-menu-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .mobile-nav-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.65rem 0.5rem;
+    font-size: 1rem;
+    color: var(--text-main);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  }
+
+  .btn-block {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  @media (max-width: 900px) {
+    .nav-links {
+      display: none;
+    }
+    .header-cta {
+      display: none;
+    }
+    .mobile-toggle {
+      display: flex;
+    }
+    .top-announcement {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,118 @@
+---
+export interface HeadingItem {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: HeadingItem[];
+}
+
+const { headings } = Astro.props;
+
+// 仅保留 h2 和 h3
+const filteredHeadings = headings.filter(h => h.depth === 2 || h.depth === 3);
+---
+
+{filteredHeadings.length > 0 && (
+  <aside class="toc-wrapper glass-card">
+    <div class="toc-header">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="toc-icon">
+        <line x1="8" y1="6" x2="21" y2="6"></line>
+        <line x1="8" y1="12" x2="21" y2="12"></line>
+        <line x1="8" y1="18" x2="21" y2="18"></line>
+        <line x1="3" y1="6" x2="3.01" y2="6"></line>
+        <line x1="3" y1="12" x2="3.01" y2="12"></line>
+        <line x1="3" y1="18" x2="3.01" y2="18"></line>
+      </svg>
+      <span class="toc-title">文章目录导读</span>
+    </div>
+
+    <nav class="toc-nav">
+      <ul class="toc-list">
+        {filteredHeadings.map((h) => (
+          <li class={`toc-item depth-${h.depth}`}>
+            <a href={`#${h.slug}`} class="toc-link">
+              {h.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </aside>
+)}
+
+<script>
+  // 高亮当前阅读的标题
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const id = entry.target.getAttribute('id');
+      const tocLink = document.querySelector(`.toc-link[href="#${id}"]`);
+      if (entry.isIntersecting && tocLink) {
+        document.querySelectorAll('.toc-link').forEach(l => l.classList.remove('active'));
+        tocLink.classList.add('active');
+      }
+    });
+  }, { rootMargin: '0px 0px -70% 0px' });
+
+  document.querySelectorAll('.prose h2, .prose h3').forEach(heading => {
+    observer.observe(heading);
+  });
+</script>
+
+<style>
+  .toc-wrapper {
+    padding: 1.25rem;
+    position: sticky;
+    top: 90px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+  }
+
+  .toc-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.85rem;
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--accent-cyan);
+    font-size: 0.88rem;
+    font-weight: 700;
+  }
+
+  .toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .toc-item.depth-3 {
+    padding-left: 0.85rem;
+  }
+
+  .toc-link {
+    display: block;
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    line-height: 1.45;
+    padding: 0.2rem 0;
+    border-left: 2px solid transparent;
+    padding-left: 0.5rem;
+    transition: all 0.2s ease;
+  }
+
+  .toc-link:hover {
+    color: #ffffff;
+  }
+
+  .toc-link.active {
+    color: var(--accent-cyan);
+    font-weight: 600;
+    border-left-color: var(--accent-cyan);
+  }
+</style>

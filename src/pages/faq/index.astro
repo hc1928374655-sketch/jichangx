@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import FaqSection from '../../components/FaqSection.astro';
+
+const breadcrumbItems = [
+  { title: '首页', href: '/' },
+  { title: '防坑指南' }
+];
+---
+
+<BaseLayout
+  title="新手避坑指南与常见问题解答 - NodeRadar 节点雷达"
+  description="新手选购机场前必读的关键常识，IEPL/IPLC 专线科普、流媒体解锁机制、客户端选择与防跑路避坑指南。"
+>
+  <div class="container archive-container">
+    <Breadcrumb items={breadcrumbItems} />
+  </div>
+
+  <FaqSection />
+</BaseLayout>
+
+<style>
+  .archive-container {
+    padding-top: 2rem;
+  }
+</style>

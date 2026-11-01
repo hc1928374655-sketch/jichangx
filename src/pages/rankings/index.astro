@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import RankingTable from '../../components/RankingTable.astro';
+
+const breadcrumbItems = [
+  { title: '首页', href: '/' },
+  { title: '机场综合榜' }
+];
+---
+
+<BaseLayout
+  title="2026 机场综合榜 - 主流优质网络专线横评天梯榜"
+  description="基于实验室为期 30 天 24 小时全自动监测数据，涵盖晚高峰延迟稳定性、4K 流媒体解锁率、客服响应与性价比综合评定。"
+>
+  <div class="container archive-container">
+    <Breadcrumb items={breadcrumbItems} />
+  </div>
+
+  <RankingTable />
+</BaseLayout>
+
+<style>
+  .archive-container {
+    padding-top: 2rem;
+  }
+</style>

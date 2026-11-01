@@ -1,0 +1,123 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+import { siteConfig } from '../../config/site';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog');
+  const categories = siteConfig.categories;
+
+  return categories.map(cat => {
+    const filteredPosts = allPosts.filter(p => p.data.category === cat.key);
+    return {
+      params: { category: cat.key },
+      props: { cat, posts: filteredPosts }
+    };
+  });
+}
+
+interface Props {
+  cat: {
+    key: string;
+    name: string;
+    description: string;
+    color: string;
+  };
+  posts: any[];
+}
+
+const { cat, posts } = Astro.props;
+
+const breadcrumbItems = [
+  { title: '首页', href: '/' },
+  { title: cat.name }
+];
+---
+
+<BaseLayout
+  title={`${cat.name} 文章归档`}
+  description={cat.description}
+>
+  <div class="container archive-container">
+    <Breadcrumb items={breadcrumbItems} />
+
+    <header class="archive-header">
+      <span class="badge" style={`color: ${cat.color}; background: ${cat.color}15; border: 1px solid ${cat.color}40;`}>
+        分类专区
+      </span>
+      <h1 class="archive-title">{cat.name}</h1>
+      <p class="archive-desc">{cat.description}</p>
+    </header>
+
+    {posts.length > 0 ? (
+      <div class="posts-grid">
+        {posts.map(post => (
+          <PostCard post={post} />
+        ))}
+      </div>
+    ) : (
+      <div class="empty-state glass-card">
+        <p>该分类下暂无文章，内容正在持续补充中...</p>
+        <a href="/" class="btn btn-secondary btn-sm">返回首页</a>
+      </div>
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .archive-container {
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+  }
+
+  .archive-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .archive-title {
+    font-size: 2.25rem;
+    font-weight: 850;
+    color: #ffffff;
+    margin: 0.5rem 0 0.85rem;
+    letter-spacing: -0.02em;
+  }
+
+  .archive-desc {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    max-width: 800px;
+    line-height: 1.7;
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .empty-state {
+    padding: 3rem;
+    text-align: center;
+    color: var(--text-muted);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  @media (max-width: 960px) {
+    .posts-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .posts-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

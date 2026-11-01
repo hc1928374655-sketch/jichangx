@@ -1,0 +1,82 @@
+---
+interface BreadcrumbItem {
+  title: string;
+  href?: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+}
+
+const { items } = Astro.props;
+
+// 生成 BreadcrumbList Schema.org
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": items.map((item, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "name": item.title,
+    ...(item.href ? { "item": item.href.startsWith('http') ? item.href : `https://noderadar.example.com${item.href}` } : {})
+  }))
+};
+---
+
+<nav class="breadcrumb-nav" aria-label="面包屑导航">
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
+  <ol class="breadcrumb-list">
+    {items.map((item, index) => {
+      const isLast = index === items.length - 1;
+      return (
+        <li class="breadcrumb-item">
+          {item.href && !isLast ? (
+            <a href={item.href} class="breadcrumb-link">{item.title}</a>
+          ) : (
+            <span class="breadcrumb-current" aria-current="page">{item.title}</span>
+          )}
+          {!isLast && <span class="breadcrumb-separator">/</span>}
+        </li>
+      );
+    })}
+  </ol>
+</nav>
+
+<style>
+  .breadcrumb-nav {
+    margin-bottom: 1.5rem;
+    font-size: 0.85rem;
+  }
+
+  .breadcrumb-list {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .breadcrumb-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .breadcrumb-link {
+    color: var(--text-dim);
+  }
+  .breadcrumb-link:hover {
+    color: var(--accent-cyan);
+  }
+
+  .breadcrumb-current {
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  .breadcrumb-separator {
+    color: var(--border-light);
+  }
+</style>

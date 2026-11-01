@@ -1,0 +1,425 @@
+---
+import AffButton from './AffButton.astro';
+
+interface Props {
+  brandName: string;
+  overallScore?: number;
+  starRating?: number;
+  lineType?: string;
+  entryPrice?: string;
+  trafficRange?: string;
+  protocols?: string[];
+  streamingUnlockRate?: string;
+  officialUrlPlaceholder?: string;
+  couponCode?: string;
+  pros?: string[];
+  cons?: string[];
+  bestFor?: string;
+}
+
+const {
+  brandName,
+  overallScore = 9.5,
+  starRating = 4.8,
+  lineType = "IEPL 纯专线",
+  entryPrice = "¥19.9 / 月 起",
+  trafficRange = "100GB - 1500GB / 月",
+  protocols = ["Shadowsocks", "Trojan"],
+  streamingUnlockRate = "99.9%",
+  officialUrlPlaceholder = "https://yp76688.kosingaff.com/#/register?code=MuizUDqY",
+  couponCode = "kxy80",
+  pros = [
+    "全节点部署物理 IEPL 专线，晚高峰零丢包与低抖动",
+    "原生住宅双 ISP IP，完美支持 Netflix 4K / ChatGPT 4.0",
+    "全平台客户端一键订阅导入，新手无门槛上手",
+    "不限制同时在线设备数，家庭与多设备友好"
+  ],
+  cons = [
+    "暂不提供免费试用，需购买入门套餐体验",
+    "价格略高于普通公网中转中继服务商"
+  ],
+  bestFor = "追求极致稳定、晚高峰不卡顿、有重度 4K 流媒体与 ChatGPT 办公需求的用户"
+} = Astro.props;
+
+// 生成 Schema.org Review 结构化数据，用于 Google Rich Snippet 星级展示
+const reviewJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Review",
+  "itemReviewed": {
+    "@type": "Product",
+    "name": brandName,
+    "description": `${brandName} 网络专线加速服务与节点评测`
+  },
+  "reviewRating": {
+    "@type": "Rating",
+    "ratingValue": overallScore,
+    "bestRating": 10,
+    "worstRating": 1
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "NodeRadar 评测实验室"
+  }
+};
+---
+
+<div class="review-score-board glass-card">
+  <!-- 注入评测星级结构化数据 -->
+  <script type="application/ld+json" set:html={JSON.stringify(reviewJsonLd)} />
+
+  <!-- 头部：得分与核心摘要 -->
+  <div class="board-header">
+    <div class="brand-info">
+      <span class="badge badge-cyan">实测实验室权威测评</span>
+      <h2 class="brand-name">{brandName} 核心综合评定看板</h2>
+      <p class="best-for">
+        <strong>适合人群：</strong>{bestFor}
+      </p>
+    </div>
+
+    <!-- 得分仪表盘 -->
+    <div class="score-dial">
+      <div class="score-num">{overallScore.toFixed(1)}</div>
+      <div class="score-meta">
+        <div class="stars">★★★★★</div>
+        <span class="score-sub">满分 10.0 分 / 卓越评级</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 参数矩阵网格 -->
+  <div class="specs-matrix">
+    <div class="spec-cell">
+      <span class="cell-label">核心线路</span>
+      <span class="cell-value text-cyan">{lineType}</span>
+    </div>
+    <div class="spec-cell">
+      <span class="cell-label">起步价格</span>
+      <span class="cell-value text-gold">{entryPrice}</span>
+    </div>
+    <div class="spec-cell">
+      <span class="cell-label">流媒体解锁</span>
+      <span class="cell-value text-emerald">{streamingUnlockRate}</span>
+    </div>
+    <div class="spec-cell">
+      <span class="cell-label">流量跨度</span>
+      <span class="cell-value">{trafficRange}</span>
+    </div>
+    <div class="spec-cell">
+      <span class="cell-label">协议支持</span>
+      <span class="cell-value">{protocols.join(' / ')}</span>
+    </div>
+    <div class="spec-cell">
+      <span class="cell-label">限时折扣码</span>
+      <div class="coupon-box">
+        <code id="coupon-text">{couponCode}</code>
+        <button id="copy-coupon-btn" class="copy-btn" title="点击复制优惠码">复制</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 优缺点剖析 -->
+  <div class="pros-cons-grid">
+    <div class="pros-box">
+      <div class="box-title pros-title">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span>核心优势 (PROS)</span>
+      </div>
+      <ul class="pros-list">
+        {pros.map(p => (
+          <li>
+            <span class="bullet-pros">✓</span>
+            <span>{p}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="cons-box">
+      <div class="box-title cons-title">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fb7185" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+        <span>不足与考量 (CONS)</span>
+      </div>
+      <ul class="cons-list">
+        {cons.map(c => (
+          <li>
+            <span class="bullet-cons">✗</span>
+            <span>{c}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <!-- 底部 CTA 转化驱动区 -->
+  <div class="board-action-bar">
+    <div class="action-hint">
+      <span>💡 提示：使用优惠码 <code>{couponCode}</code> 可享专属订购折扣</span>
+    </div>
+    <div class="action-btns">
+      <AffButton
+        href={officialUrlPlaceholder}
+        variant="gold"
+        size="lg"
+        label={`前往 ${brandName} 官方网站`}
+        brandName={brandName}
+      />
+    </div>
+  </div>
+</div>
+
+<script>
+  // 复制优惠码反馈
+  const copyBtn = document.getElementById('copy-coupon-btn');
+  const couponText = document.getElementById('coupon-text');
+
+  if (copyBtn && couponText) {
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(couponText.textContent?.trim() || '');
+        const originalText = copyBtn.textContent;
+        copyBtn.textContent = '已复制!';
+        copyBtn.style.background = '#34d399';
+        copyBtn.style.color = '#000';
+        setTimeout(() => {
+          copyBtn.textContent = originalText;
+          copyBtn.style.background = '';
+          copyBtn.style.color = '';
+        }, 2000);
+      } catch (err) {
+        console.error('复制失败', err);
+      }
+    });
+  }
+</script>
+
+<style>
+  .review-score-board {
+    margin: 2rem 0 2.5rem;
+    padding: 2.25rem;
+    border-color: rgba(56, 189, 248, 0.25);
+    background: linear-gradient(180deg, rgba(16, 24, 44, 0.9) 0%, rgba(10, 14, 26, 0.95) 100%);
+  }
+
+  .board-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .brand-name {
+    font-size: 1.65rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0.6rem 0 0.4rem;
+  }
+
+  .best-for {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.5;
+  }
+  .best-for strong {
+    color: var(--accent-cyan);
+  }
+
+  .score-dial {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(0, 0, 0, 0.35);
+    padding: 0.85rem 1.4rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(251, 191, 36, 0.25);
+    flex-shrink: 0;
+  }
+
+  .score-num {
+    font-size: 2.4rem;
+    font-weight: 900;
+    color: var(--accent-gold);
+    line-height: 1;
+  }
+
+  .score-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .stars {
+    color: var(--accent-gold);
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+  }
+
+  .score-sub {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  .specs-matrix {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .spec-cell {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 0.9rem 1.1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .cell-label {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  .cell-value {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .text-cyan { color: var(--accent-cyan); }
+  .text-gold { color: var(--accent-gold); }
+  .text-emerald { color: var(--accent-emerald); }
+
+  .coupon-box {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .coupon-box code {
+    background: rgba(251, 191, 36, 0.15);
+    color: #fbbf24;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+
+  .copy-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-light);
+    color: var(--text-main);
+    padding: 0.15rem 0.5rem;
+    font-size: 0.72rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .copy-btn:hover {
+    background: var(--accent-cyan);
+    color: #000;
+  }
+
+  .pros-cons-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .pros-box, .cons-box {
+    padding: 1.25rem;
+    border-radius: var(--radius-md);
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .box-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 750;
+    margin-bottom: 0.85rem;
+  }
+
+  .pros-title { color: var(--accent-emerald); }
+  .cons-title { color: var(--accent-rose); }
+
+  .pros-list, .cons-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    font-size: 0.88rem;
+  }
+
+  .pros-list li, .cons-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    line-height: 1.55;
+    color: var(--text-main);
+  }
+
+  .bullet-pros {
+    color: var(--accent-emerald);
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  .bullet-cons {
+    color: var(--accent-rose);
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+
+  .board-action-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-light);
+    flex-wrap: wrap;
+  }
+
+  .action-hint {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+  }
+  .action-hint code {
+    color: var(--accent-gold);
+    font-weight: 700;
+  }
+
+  @media (max-width: 800px) {
+    .board-header {
+      flex-direction: column;
+    }
+    .specs-matrix {
+      grid-template-columns: 1fr 1fr;
+    }
+    .pros-cons-grid {
+      grid-template-columns: 1fr;
+    }
+    .board-action-bar {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .action-btns {
+      width: 100%;
+    }
+  }
+</style>

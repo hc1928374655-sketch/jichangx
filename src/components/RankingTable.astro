@@ -1,0 +1,591 @@
+---
+import AffButton from './AffButton.astro';
+
+export interface RankingItem {
+  id: string;
+  rank: number;
+  name: string;
+  tagline: string;
+  badge: { text: string; type: 'gold' | 'cyan' | 'emerald' | 'purple' };
+  lineType: string;
+  protocols: string[];
+  streamingScore: string;
+  speedScore: string;
+  price: string;
+  features: string[];
+  reviewSlug: string;
+  officialUrl?: string;
+  coupon?: string;
+}
+
+const rankingData: RankingItem[] = [
+  {
+    id: "kexin",
+    rank: 1,
+    name: "可信云 (Kosing Cloud)",
+    tagline: "全BGP内网互联 · 旗舰级物理IEPL专线保障 · 站长终身首推",
+    badge: { text: "综合榜首 · 极致高稳 · 站长力荐", type: "gold" },
+    lineType: "物理IEPL纯专线",
+    protocols: ["Shadowsocks", "Trojan", "Sing-box"],
+    streamingScore: "99.9% 4K秒开",
+    speedScore: "920 Mbps+",
+    price: "¥15.0 / 月 起",
+    features: ["全天晚高峰无QoS限速", "原生家庭双ISP解锁ChatGPT", "60+顶级高带宽节点池", "不限制在线设备数量"],
+    reviewSlug: "kexin-cloud-review",
+    coupon: "kxy80",
+    officialUrl: "https://yp76688.kosingaff.com/#/register?code=MuizUDqY"
+  },
+  {
+    id: "kuaili",
+    rank: 2,
+    name: "快狸 (KuaiLi Cloud)",
+    tagline: "萌系高质感全IEPL专线 · 亚太极速网络 · 品质榜眼",
+    badge: { text: "亚太极速 · 纯血IEPL", type: "cyan" },
+    lineType: "全IEPL高速专线",
+    protocols: ["Shadowsocks", "Trojan"],
+    streamingScore: "99.5% 4K超清",
+    speedScore: "890 Mbps+",
+    price: "¥15.0 / 月 起",
+    features: ["小狸基础版¥22/100G超划算", "全节点x1倍率晚高峰不降速", "智能路由自动择优顺滑体验", "全内网纯IEPL物理专线"],
+    reviewSlug: "kuaili-review",
+    coupon: "kl888",
+    officialUrl: "https://ermaozi.kuailicloud.cc/#/register?code=WOsg59TX"
+  },
+  {
+    id: "guangnian",
+    rank: 3,
+    name: "光年梯 (GuangNianTi)",
+    tagline: "自研多端免配客户端 · 支持独享私人专属专线",
+    badge: { text: "极简多端 · 独享专线", type: "emerald" },
+    lineType: "IPLC / IEPL 高速专线",
+    protocols: ["Shadowsocks", "Trojan", "Nextin"],
+    streamingScore: "98.8% 全绿解锁",
+    speedScore: "820 Mbps+",
+    price: "¥18.0 / 月 起",
+    features: ["自研Win/Mac/Android/iOS客户端", "支持一人一线独立公网IP定制", "晚高峰速率稳定不丢包"],
+    reviewSlug: "guangnianti-review",
+    coupon: "GNT80",
+    officialUrl: "https://ermaozi02.gntvipaff.cc/#/?code=SucnamAz"
+  },
+  {
+    id: "speedworld",
+    rank: 4,
+    name: "速界 (SpeedWorld)",
+    tagline: "智能动态选路 · 全节点x1倍率高速专线",
+    badge: { text: "智能调度 · 高性价比", type: "purple" },
+    lineType: "全IPLC高速专线",
+    protocols: ["Shadowsocks", "Trojan"],
+    streamingScore: "98.0% 4K流畅",
+    speedScore: "780 Mbps+",
+    price: "¥15.0 / 月 起",
+    features: ["单节点峰值2.5Gbps", "原生IP解锁TikTok/ChatGPT", "年付低至7.5元/月", "多端设备不限连接数"],
+    reviewSlug: "speedworld-review",
+    coupon: "sujie888",
+    officialUrl: "https://maya_hhh.speedworldaff.cc/#/register?code=n3J99I0B"
+  },
+  {
+    id: "jilian",
+    rank: 5,
+    name: "极连云 (JiLianCloud)",
+    tagline: "老牌沉淀品质专线 · 极速流媒体调度",
+    badge: { text: "老牌专线 · 永久备用", type: "cyan" },
+    lineType: "全IPLC物理专线",
+    protocols: ["Shadowsocks", "Trojan"],
+    streamingScore: "97.5% 秒级解析",
+    speedScore: "750 Mbps+",
+    price: "¥18.0 / 月 起",
+    features: ["支持一次性永久不限时包", "全球热门与小众十余国落地", "原生住宅IP无感换区"],
+    reviewSlug: "jilianyun-review",
+    coupon: "JLY888",
+    officialUrl: "https://jichangbaike01.jlcvipaff.cc/#/?code=WjREDkbo"
+  },
+  {
+    id: "edgenova",
+    rank: 6,
+    name: "边缘 (EdgeNova)",
+    tagline: "2.5G超大带宽专线 · 原生住宅IP全解锁",
+    badge: { text: "超大带宽 · 专属8折", type: "purple" },
+    lineType: "全IPLC物理专线",
+    protocols: ["Shadowsocks", "VLESS", "Trojan"],
+    streamingScore: "97.0% 稳定解锁",
+    speedScore: "720 Mbps+",
+    price: "¥15.0 / 月 起",
+    features: ["全节点x1倍率不虚标", "提供永久不限时流量包", "覆盖港台日新美韩多国", "全场8折专属优惠码 xk808"],
+    reviewSlug: "edgenova-review",
+    coupon: "xk808",
+    officialUrl: "https://ermaozi.edgenovaaff.cc/#/register?code=p6zUBwpY"
+  },
+  {
+    id: "yuntu",
+    rank: 7,
+    name: "云图 (YunTu Cloud)",
+    tagline: "全BGP智能接入 · 高清流媒体低延迟专线",
+    badge: { text: "BGP调度 · 专属优惠", type: "cyan" },
+    lineType: "IPLC 高速专线",
+    protocols: ["Shadowsocks", "Trojan"],
+    streamingScore: "96.5% 流畅解锁",
+    speedScore: "700 Mbps+",
+    price: "¥15.0 / 月 起",
+    features: ["智能BGP多入口分流", "全节点x1倍率计费", "晚高峰速率平稳", "专属优惠码 yt88"],
+    reviewSlug: "yuntu-review",
+    coupon: "yt88",
+    officialUrl: "https://super.ytjcok.org/#/register?code=cnsv07BH"
+  },
+  {
+    id: "shunyun",
+    rank: 8,
+    name: "瞬云 (ShunYun)",
+    tagline: "极简轻量订阅 · 秒级解析快速接入",
+    badge: { text: "极简轻量 · 平价专线", type: "emerald" },
+    lineType: "全专线高速链路",
+    protocols: ["Shadowsocks", "VLESS"],
+    streamingScore: "96.0% 稳定",
+    speedScore: "680 Mbps+",
+    price: "¥12.0 / 月 起",
+    features: ["新锐轻量专线架构", "全平台一键快速订阅", "流媒体多区解锁", "性价比月付亲民"],
+    reviewSlug: "shunyun-review",
+    coupon: "专属注册通道",
+    officialUrl: "https://ddd.jichang.best/#/register?code=UBlp0cfC"
+  },
+  {
+    id: "kunpeng",
+    rank: 9,
+    name: "鲲鹏加速",
+    tagline: "大流量池畅享 · 商务跨境办公加速",
+    badge: { text: "大流量池 · 商务优选", type: "purple" },
+    lineType: "隧道中继 / 专线混合",
+    protocols: ["Shadowsocks", "Trojan"],
+    streamingScore: "95.5% 4K可用",
+    speedScore: "660 Mbps+",
+    price: "¥16.0 / 月 起",
+    features: ["高带宽大流量套餐", "多平台客户端适配", "支持AI工具与海外搜索", "多并发设备支持"],
+    reviewSlug: "kunpeng-review",
+    coupon: "专属注册通道",
+    officialUrl: "https://kunpengjiasu.com/#/register?code=BvGzDUKn"
+  },
+  {
+    id: "dalaoyun",
+    rank: 10,
+    name: "大佬云 (DaLaoYun)",
+    tagline: "老牌资深团队 · 稳定节点池日常首选",
+    badge: { text: "老牌沉淀 · 稳定靠谱", type: "cyan" },
+    lineType: "高速 BGP 中继专线",
+    protocols: ["Shadowsocks", "Trojan"],
+    streamingScore: "95.0% 解锁",
+    speedScore: "650 Mbps+",
+    price: "¥15.0 / 月 起",
+    features: ["节点丰富覆盖广", "支持全量流媒体解锁", "晚高峰抗封锁强", "专属优惠码 dly88"],
+    reviewSlug: "dalaoyun-review",
+    coupon: "dly88",
+    officialUrl: "https://liu01.dalaoyunaff.com/#/?code=vib7Ynj1"
+  },
+  {
+    id: "shenxing",
+    rank: 11,
+    name: "神行加速",
+    tagline: "神行千里极速直达 · 游戏与网页多维加速",
+    badge: { text: "亚太直连 · 低时延", type: "emerald" },
+    lineType: "优质专线隧道",
+    protocols: ["Shadowsocks", "VLESS"],
+    streamingScore: "94.5% 流畅",
+    speedScore: "630 Mbps+",
+    price: "¥13.0 / 月 起",
+    features: ["亚太低延迟节点矩阵", "轻度用户低门槛入门", "智能选路负载均衡", "专属优惠码 sx0077"],
+    reviewSlug: "shenxing-review",
+    coupon: "sx0077",
+    officialUrl: "https://fugui0077.shenxingaff.com/#/?code=1c9N5cW0"
+  },
+  {
+    id: "huanqiuti",
+    rank: 12,
+    name: "环球梯",
+    tagline: "环球网络畅联 · 跨国差旅海外流媒体",
+    badge: { text: "全球节点 · 丰富落地", type: "purple" },
+    lineType: "国际多线专线",
+    protocols: ["Shadowsocks", "Trojan"],
+    streamingScore: "94.0% 覆盖广",
+    speedScore: "610 Mbps+",
+    price: "¥18.0 / 月 起",
+    features: ["全球二十余国落地节点", "支持多客户端快速导入", "晚高峰流媒体持续可用", "专属优惠码 hq66"],
+    reviewSlug: "huanqiuti-review",
+    coupon: "hq66",
+    officialUrl: "https://123pps01.huanqiutiaff.com/#/?code=xhHC36yQ"
+  },
+  {
+    id: "liulianyun",
+    rank: 13,
+    name: "榴莲云 (LiuLianYun)",
+    tagline: "浓郁顺滑网络 · 平价大碗日常追剧备用",
+    badge: { text: "平价大碗 · 追剧神器", type: "cyan" },
+    lineType: "BGP 高速中继",
+    protocols: ["Shadowsocks", "Trojan"],
+    streamingScore: "93.5% 稳定",
+    speedScore: "590 Mbps+",
+    price: "¥12.0 / 月 起",
+    features: ["超高性价比大流量包", "流媒体主流非自制剧解锁", "界面清爽操作简单", "专属优惠码 ll88"],
+    reviewSlug: "liulianyun-review",
+    coupon: "ll88",
+    officialUrl: "http://853vip01.liulianyunaff.com/#/?code=YGG1TN2b"
+  },
+  {
+    id: "shandianshu",
+    rank: 14,
+    name: "闪电鼠",
+    tagline: "如闪电般轻捷灵动 · 学生与轻量备选",
+    badge: { text: "超低门槛 · 学生首选", type: "emerald" },
+    lineType: "高速专线中转",
+    protocols: ["Shadowsocks", "Trojan"],
+    streamingScore: "93.0% 流畅",
+    speedScore: "580 Mbps+",
+    price: "¥10.0 / 月 起",
+    features: ["极致月付门槛", "轻度查资料与推特秒开", "全自动节点连通性检测", "专属优惠码 sd88"],
+    reviewSlug: "shandianshu-review",
+    coupon: "sd88",
+    officialUrl: "https://eothvip01.shandianshuaff.com/#/?code=gYfNaz4o"
+  },
+  {
+    id: "yunjiexian",
+    rank: 15,
+    name: "云界线",
+    tagline: "破除网络界线 · 超低门槛备用节点神器",
+    badge: { text: "9.9元超低月付 · 防失联", type: "purple" },
+    lineType: "多线智能中继",
+    protocols: ["Shadowsocks", "VLESS"],
+    streamingScore: "92.5% 可用",
+    speedScore: "560 Mbps+",
+    price: "¥9.9 / 月 起",
+    features: ["百兆稳定带宽输出", "年付折算极度划算", "防失联多备用节点池", "专属优惠码 yjx888"],
+    reviewSlug: "yunjiexian-review",
+    coupon: "yjx888",
+    officialUrl: "https://youxia01.yunjiexianaff.com/#/?code=dUmBeoa5"
+  }
+];
+---
+
+<section id="rankings" class="ranking-section">
+  <div class="container">
+    <div class="section-header text-center">
+      <span class="section-tag">2026 权威天梯榜</span>
+      <h2 class="section-title">主流优质网络专线机场横评排行榜</h2>
+      <p class="section-subtitle">
+        基于实验室为期 30 天 24 小时全自动监测数据，涵盖晚高峰延迟稳定性、4K 流媒体解锁率、客服响应与性价比综合评定。
+      </p>
+    </div>
+
+    <!-- 榜单列表容器 -->
+    <div class="ranking-cards-wrapper">
+      {rankingData.map((item) => (
+        <div class={`ranking-card glass-card ${item.rank === 1 ? 'featured-border' : ''}`}>
+          <!-- 左侧：排名与品牌 -->
+          <div class="card-brand-col">
+            <div class="rank-badge-wrap">
+              <span class={`rank-number rank-${item.rank}`}>TOP {item.rank}</span>
+              <span class={`badge badge-${item.badge.type}`}>{item.badge.text}</span>
+            </div>
+            <h3 class="brand-title">
+              <a href={`./blog/${item.reviewSlug}/index.html`}>{item.name}</a>
+            </h3>
+            <p class="brand-tagline">{item.tagline}</p>
+            <div class="brand-features">
+              {item.features.map(f => (
+                <span class="feat-tag">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  {f}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <!-- 中间：核心实测指标参数 -->
+          <div class="card-specs-col">
+            <div class="spec-item">
+              <span class="spec-label">线路架构</span>
+              <span class="spec-value highlight-cyan">{item.lineType}</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">流媒体 4K 解锁</span>
+              <span class="spec-value highlight-gold">{item.streamingScore}</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">协议支持</span>
+              <span class="spec-value">{item.protocols.join(' / ')}</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">测速峰值</span>
+              <span class="spec-value">{item.speedScore}</span>
+            </div>
+          </div>
+
+          <!-- 右侧：价格与行动转化 CTA -->
+          <div class="card-action-col">
+            <div class="price-wrap">
+              <span class="price-val">{item.price}</span>
+              {item.coupon && (
+                <span class="coupon-tag" title="点击可在评测页复制优惠码">
+                  券码: <code>{item.coupon}</code>
+                </span>
+              )}
+            </div>
+            <div class="action-buttons">
+              <AffButton
+                href={item.officialUrl}
+                variant={item.rank === 1 ? 'gold' : 'primary'}
+                label="直达官方网站"
+                brandName={item.name}
+              />
+              <a href={`./blog/${item.reviewSlug}/index.html`} class="btn btn-secondary btn-sm">
+                阅读深度实测报告 &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- 底部保障声明 -->
+    <div class="ranking-footer-hint">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+      <span>测试环境均为全国三大运营商（电信/联通/移动）晚高峰 20:00 - 23:00 真实网络实测。建议根据个人常用设备与用途选择。</span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ranking-section {
+    padding: 3.5rem 0;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+  .section-header .section-subtitle {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .ranking-cards-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .ranking-card {
+    display: grid;
+    grid-template-columns: 1.4fr 1.2fr 1fr;
+    gap: 2rem;
+    align-items: center;
+    padding: 1.75rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ranking-card.featured-border {
+    border-color: rgba(251, 191, 36, 0.45);
+    background: linear-gradient(180deg, rgba(20, 30, 52, 0.85) 0%, rgba(12, 17, 30, 0.95) 100%);
+    box-shadow: 0 10px 35px -5px rgba(251, 191, 36, 0.15);
+  }
+
+  .card-brand-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .rank-badge-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+
+  .rank-number {
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-sm);
+    letter-spacing: 0.05em;
+  }
+
+  .rank-1 {
+    background: var(--grad-gold);
+    color: #0b0f19;
+  }
+  .rank-2 {
+    background: rgba(56, 189, 248, 0.2);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.4);
+  }
+  .rank-3 {
+    background: rgba(52, 211, 153, 0.2);
+    color: #34d399;
+    border: 1px solid rgba(52, 211, 153, 0.4);
+  }
+  .rank-4 {
+    background: rgba(168, 85, 247, 0.2);
+    color: #c084fc;
+    border: 1px solid rgba(168, 85, 247, 0.4);
+  }
+  .rank-5 {
+    background: rgba(56, 189, 248, 0.2);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.4);
+  }
+  .rank-6 {
+    background: rgba(52, 211, 153, 0.2);
+    color: #34d399;
+    border: 1px solid rgba(52, 211, 153, 0.4);
+  }
+
+  .brand-title {
+    font-size: 1.45rem;
+    font-weight: 800;
+    margin: 0;
+  }
+
+  .brand-title a {
+    color: #ffffff;
+  }
+  .brand-title a:hover {
+    color: var(--accent-cyan);
+  }
+
+  .brand-tagline {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+  }
+
+  .brand-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.35rem;
+  }
+
+  .feat-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.78rem;
+    color: var(--text-main);
+    background: rgba(255, 255, 255, 0.04);
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .card-specs-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 1.25rem;
+    background: rgba(0, 0, 0, 0.25);
+    padding: 1.1rem 1.25rem;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+  }
+
+  .spec-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .spec-label {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  .spec-value {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .highlight-cyan { color: var(--accent-cyan); }
+  .highlight-gold { color: var(--accent-gold); }
+
+  .card-action-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1rem;
+    text-align: right;
+  }
+
+  .price-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.25rem;
+  }
+
+  .price-val {
+    font-size: 1.35rem;
+    font-weight: 850;
+    color: var(--accent-gold);
+    letter-spacing: -0.02em;
+  }
+
+  .coupon-tag {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+  .coupon-tag code {
+    background: rgba(251, 191, 36, 0.15);
+    color: #fbbf24;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+
+  .action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 200px;
+  }
+
+  .ranking-footer-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.75rem;
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    text-align: center;
+  }
+
+  @media (max-width: 960px) {
+    .ranking-card {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    .card-action-col {
+      align-items: stretch;
+      text-align: left;
+    }
+    .price-wrap {
+      align-items: flex-start;
+    }
+    .action-buttons {
+      max-width: 100%;
+      flex-direction: row;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .card-specs-col {
+      grid-template-columns: 1fr;
+    }
+    .action-buttons {
+      flex-direction: column;
+    }
+  }
+</style>

@@ -1,0 +1,354 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  posts: CollectionEntry<'blog'>[];
+}
+
+const { posts } = Astro.props;
+
+// 选取前 3 篇精选文章
+const mainPost = posts[0];
+const subPosts = posts.slice(1, 3);
+---
+
+{mainPost && (
+  <section class="featured-showcase-section">
+    <div class="container">
+      <div class="showcase-header">
+        <div class="s-title-wrap">
+          <span class="badge badge-gold">★ 本周编辑精选</span>
+          <h2 class="showcase-title">实验室置顶头条与实测热点</h2>
+        </div>
+        <span class="showcase-sub">严选本月最具参考价值的网络专线测评与客户端教程</span>
+      </div>
+
+      <div class="showcase-grid">
+        <!-- 左侧：超大主推头条卡片 -->
+        <article class="featured-main-card glass-card interactive-card">
+          <a href={`./blog/${mainPost.slug}/index.html`} class="main-card-link">
+            <div class="main-img-box">
+              <img src={mainPost.data.heroImage || '/images/airport-review-cover.jpg'} alt={mainPost.data.title} class="main-img" />
+              <div class="main-img-overlay"></div>
+              <span class="main-badge badge badge-gold">🔥 重磅首推</span>
+            </div>
+            <div class="main-body">
+              <div class="main-meta">
+                <span class="meta-cat badge badge-cyan">
+                  {mainPost.data.category === 'reviews' ? '品牌深度评测' : '实战教程'}
+                </span>
+                <time class="meta-time">{mainPost.data.pubDate.toISOString().slice(0, 10)}</time>
+                <span class="meta-dot">·</span>
+                <span class="meta-author">{mainPost.data.author}</span>
+              </div>
+              <h3 class="main-title">{mainPost.data.title}</h3>
+              <p class="main-desc">{mainPost.data.description}</p>
+              <div class="main-footer">
+                <div class="main-tags">
+                  {mainPost.data.tags.slice(0, 3).map(t => (
+                    <span class="m-tag">#{t}</span>
+                  ))}
+                </div>
+                <span class="main-read-btn">阅读全文 &rarr;</span>
+              </div>
+            </div>
+          </a>
+        </article>
+
+        <!-- 右侧：2 篇次级热点图文卡片 -->
+        <div class="featured-sub-col">
+          {subPosts.map((sp, idx) => (
+            <article class="sub-card glass-card interactive-card">
+              <a href={`./blog/${sp.slug}/index.html`} class="sub-card-link">
+                <div class="sub-img-box">
+                  <img src={sp.data.heroImage || '/images/comparison-cover.jpg'} alt={sp.data.title} class="sub-img" />
+                  <span class={`sub-badge badge ${idx === 0 ? 'badge-cyan' : 'badge-emerald'}`}>
+                    {sp.data.category === 'reviews' ? '品牌实测' : '实战教程'}
+                  </span>
+                </div>
+                <div class="sub-body">
+                  <div class="sub-meta">
+                    <time>{sp.data.pubDate.toISOString().slice(0, 10)}</time>
+                    <span class="meta-dot">·</span>
+                    <span>{sp.data.author}</span>
+                  </div>
+                  <h4 class="sub-title">{sp.data.title}</h4>
+                  <p class="sub-desc">{sp.data.description}</p>
+                  <span class="sub-link">查阅文章 &rarr;</span>
+                </div>
+              </a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .featured-showcase-section {
+    padding: 2rem 0 2.5rem;
+  }
+
+  .showcase-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .s-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .showcase-title {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  .showcase-sub {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+  }
+
+  .showcase-grid {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: 1.5rem;
+  }
+
+  /* 主推大卡片 */
+  .featured-main-card {
+    overflow: hidden;
+  }
+
+  .main-card-link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .main-img-box {
+    position: relative;
+    height: 280px;
+    overflow: hidden;
+    background: #0d121f;
+  }
+
+  .main-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  .featured-main-card:hover .main-img {
+    transform: scale(1.04);
+  }
+
+  .main-img-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(7, 10, 18, 0.85) 100%);
+  }
+
+  .main-badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    z-index: 2;
+  }
+
+  .main-body {
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .main-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin-bottom: 0.75rem;
+  }
+
+  .meta-dot { opacity: 0.5; }
+
+  .main-title {
+    font-size: 1.45rem;
+    font-weight: 850;
+    color: #ffffff;
+    line-height: 1.35;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+  }
+
+  .featured-main-card:hover .main-title {
+    color: var(--accent-cyan);
+  }
+
+  .main-desc {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex: 1;
+  }
+
+  .main-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .main-tags {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .m-tag {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  .main-read-btn {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+  }
+
+  /* 右侧次级卡片列表 */
+  .featured-sub-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .sub-card {
+    overflow: hidden;
+    flex: 1;
+  }
+
+  .sub-card-link {
+    display: flex;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .sub-img-box {
+    position: relative;
+    width: 175px;
+    height: 100%;
+    min-height: 170px;
+    overflow: hidden;
+    background: #0d121f;
+    flex-shrink: 0;
+  }
+
+  .sub-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  .sub-card:hover .sub-img {
+    transform: scale(1.05);
+  }
+
+  .sub-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 0.7rem;
+    padding: 0.15rem 0.5rem;
+  }
+
+  .sub-body {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .sub-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-bottom: 0.5rem;
+  }
+
+  .sub-title {
+    font-size: 1.05rem;
+    font-weight: 750;
+    color: #ffffff;
+    line-height: 1.35;
+    margin-bottom: 0.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .sub-card:hover .sub-title {
+    color: var(--accent-cyan);
+  }
+
+  .sub-desc {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex: 1;
+  }
+
+  .sub-link {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent-cyan);
+  }
+
+  @media (max-width: 960px) {
+    .showcase-grid {
+      grid-template-columns: 1fr;
+    }
+    .sub-card-link {
+      flex-direction: row;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .sub-card-link {
+      flex-direction: column;
+    }
+    .sub-img-box {
+      width: 100%;
+      height: 160px;
+    }
+  }
+</style>

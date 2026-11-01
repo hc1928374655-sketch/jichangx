@@ -1,0 +1,77 @@
+---
+import { siteConfig } from '../config/site';
+
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'gold' | 'secondary' | 'outline';
+  size?: 'sm' | 'md' | 'lg';
+  target?: string;
+  class?: string;
+  label?: string;
+  brandName?: string;
+}
+
+const {
+  href = siteConfig.defaultAffPlaceholder,
+  variant = 'primary',
+  size = 'md',
+  target = '_blank',
+  class: className = '',
+  label = '直达官方网站',
+  brandName
+} = Astro.props;
+
+// 变体样式映射
+const variantClasses = {
+  primary: 'btn-primary',
+  gold: 'btn-gold',
+  secondary: 'btn-secondary',
+  outline: 'btn-secondary border-cyan'
+};
+
+const sizeClasses = {
+  sm: 'btn-sm',
+  md: '',
+  lg: 'btn-lg'
+};
+---
+
+<a
+  href={href}
+  target={target}
+  rel="nofollow sponsored noopener noreferrer"
+  class={`btn ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
+  data-aff-brand={brandName}
+  title={brandName ? `访问 ${brandName} 官方网站` : label}
+>
+  <slot>
+    <span>{label}</span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="aff-icon">
+      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+      <polyline points="15 3 21 3 21 9"></polyline>
+      <line x1="10" y1="14" x2="21" y2="3"></line>
+    </svg>
+  </slot>
+</a>
+
+<style>
+  .btn-lg {
+    padding: 0.85rem 1.85rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+  .border-cyan {
+    border-color: rgba(56, 189, 248, 0.4);
+    color: #38bdf8;
+  }
+  .border-cyan:hover {
+    border-color: #38bdf8;
+    background: rgba(56, 189, 248, 0.1);
+  }
+  .aff-icon {
+    transition: transform 0.2s ease;
+  }
+  a:hover .aff-icon {
+    transform: translate(2px, -2px);
+  }
+</style>

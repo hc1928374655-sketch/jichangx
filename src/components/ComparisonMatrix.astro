@@ -1,0 +1,149 @@
+---
+import AffButton from './AffButton.astro';
+
+interface ComparisonRow {
+  dimension: string;
+  itemAValue: string;
+  itemBValue: string;
+  winner?: 'A' | 'B' | 'TIE';
+}
+
+interface Props {
+  itemAName: string;
+  itemBName: string;
+  rows?: ComparisonRow[];
+  affUrlA?: string;
+  affUrlB?: string;
+}
+
+const defaultRows: ComparisonRow[] = [
+  { dimension: "线路基础架构", itemAValue: "物理全 IEPL 纯内网专线 (双BGP)", itemBValue: "全物理 IPLC 跨境专线 (2.5G峰值)", winner: "TIE" },
+  { dimension: "晚高峰测速带宽", itemAValue: "920 Mbps+ (延迟抖动 <1.5ms)", itemBValue: "880 Mbps+ (稳定流畅)", winner: "A" },
+  { dimension: "流媒体与 AI 解锁率", itemAValue: "99.9% 原生家庭双ISP IP", itemBValue: "99.5% 原生住宅 IP", winner: "A" },
+  { dimension: "全球落地节点覆盖", itemAValue: "60+ 顶级高带宽核心节点", itemBValue: "涵盖港台日新美韩欧洲十余国", winner: "B" },
+  { dimension: "起步门槛与价格", itemAValue: "¥15.0 / 月 (60G起) 优惠码 kxy80", itemBValue: "¥15.0 / 月 (带专属8折码 xk808)", winner: "B" },
+  { dimension: "不限时按量永久包", itemAValue: "50G 永久包 ¥50", itemBValue: "100G / 450G 永久包更丰富", winner: "B" },
+  { dimension: "协议生态与在线设备", itemAValue: "Shadowsocks / Trojan / 不限设备", itemBValue: "Shadowsocks / VLESS / 不限设备", winner: "TIE" },
+  { dimension: "客户端一键导入", itemAValue: "全平台一键同步订阅导入", itemBValue: "主流客户端极速秒导入", winner: "TIE" }
+];
+
+const {
+  itemAName = "可信云 (Kosing Cloud)",
+  itemBName = "边缘 (EdgeNova)",
+  rows = defaultRows,
+  affUrlA = "https://yp76688.kosingaff.com/#/register?code=MuizUDqY",
+  affUrlB = "https://ermaozi.edgenovaaff.cc/#/register?code=p6zUBwpY"
+} = Astro.props;
+---
+
+<div class="comparison-matrix-wrap glass-card">
+  <div class="matrix-table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th class="col-dim">核心对比维度</th>
+          <th class="col-item col-a">{itemAName}</th>
+          <th class="col-item col-b">{itemBName}</th>
+          <th class="col-winner">实验室裁决</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((row) => (
+          <tr>
+            <td class="dim-name">{row.dimension}</td>
+            <td class={`val-cell ${row.winner === 'A' ? 'cell-winner' : ''}`}>
+              {row.itemAValue}
+            </td>
+            <td class={`val-cell ${row.winner === 'B' ? 'cell-winner' : ''}`}>
+              {row.itemBValue}
+            </td>
+            <td class="winner-cell">
+              {row.winner === 'A' && <span class="badge badge-emerald">{itemAName} 胜出</span>}
+              {row.winner === 'B' && <span class="badge badge-cyan">{itemBName} 胜出</span>}
+              {row.winner === 'TIE' && <span class="badge badge-purple">平分秋色</span>}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td class="dim-name">官网直达通道</td>
+          <td>
+            <AffButton href={affUrlA} label={`直达 ${itemAName}`} brandName={itemAName} size="sm" variant="gold" />
+          </td>
+          <td>
+            <AffButton href={affUrlB} label={`直达 ${itemBName}`} brandName={itemBName} size="sm" variant="primary" />
+          </td>
+          <td>
+            <span class="footnote-text">按需选购</span>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+
+<style>
+  .comparison-matrix-wrap {
+    margin: 2.5rem 0;
+    overflow: hidden;
+    padding: 0.5rem;
+  }
+
+  .matrix-table-scroll {
+    overflow-x: auto;
+  }
+
+  .comp-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+  }
+
+  .comp-table th, .comp-table td {
+    padding: 1rem 1.25rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .comp-table th {
+    background: rgba(0, 0, 0, 0.35);
+    color: #ffffff;
+    font-weight: 750;
+    font-size: 0.95rem;
+  }
+
+  .col-dim { width: 22%; }
+  .col-item { width: 32%; }
+  .col-winner { width: 14%; text-align: center; }
+
+  .dim-name {
+    font-weight: 600;
+    color: var(--text-main);
+  }
+
+  .val-cell {
+    color: var(--text-muted);
+  }
+
+  .cell-winner {
+    color: #ffffff;
+    font-weight: 700;
+    background: rgba(56, 189, 248, 0.05);
+  }
+
+  .winner-cell {
+    text-align: center;
+  }
+
+  .footnote-text {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+  }
+
+  .comp-table tfoot td {
+    border-bottom: none;
+    padding-top: 1.5rem;
+    background: rgba(0, 0, 0, 0.2);
+  }
+</style>

@@ -1,0 +1,485 @@
+---
+import AffButton from './AffButton.astro';
+import { siteConfig } from '../config/site';
+
+const miniRankings = [
+  {
+    name: "可信云 (Kosing Cloud)",
+    badge: "TOP 1 站长力荐",
+    line: "全IEPL纯专线 原生双ISP 920M",
+    score: "9.9",
+    price: "¥15.0/月",
+    coupon: "kxy80",
+    url: "https://yp76688.kosingaff.com/#/register?code=MuizUDqY",
+    reviewSlug: "kexin-cloud-review"
+  },
+  {
+    name: "快狸 (KuaiLi Cloud)",
+    badge: "TOP 2",
+    line: "萌系全IEPL专线 亚太极速",
+    score: "9.5",
+    price: "¥15.0/月",
+    coupon: "kl888",
+    url: "https://ermaozi.kuailicloud.cc/#/register?code=WOsg59TX",
+    reviewSlug: "kuaili-review"
+  },
+  {
+    name: "光年梯 (GuangNianTi)",
+    badge: "TOP 3",
+    line: "多端免配客户端/独享专线",
+    score: "9.4",
+    price: "¥18.0/月",
+    coupon: "GNT80",
+    url: "https://ermaozi02.gntvipaff.cc/#/?code=SucnamAz",
+    reviewSlug: "guangnianti-review"
+  }
+];
+
+const hotPosts = [
+  { title: "【站长主推】2026 可信云深度实测：全物理 IEPL 纯专线与原生双 ISP 旗舰表现", slug: "kexin-cloud-review", reads: "38.6k" },
+  { title: "【品质榜眼】快狸 (KuaiLi Cloud) 深度实测：萌系高质感全 IEPL 纯专线实测", slug: "kuaili-review", reads: "28.5k" },
+  { title: "2026 最新 Clash Verge Rev 新手小白极速上手配置全指南", slug: "clash-verge-tutorial", reads: "24.3k" }
+];
+---
+
+<aside class="blog-sidebar">
+  <!-- 博主 / 实验室名片卡片 -->
+  <div class="sidebar-widget glass-card author-widget">
+    <div class="author-banner"></div>
+    <div class="author-info">
+      <img src="/images/avatar.jpg" alt="博主头像" class="author-avatar" />
+      <h3 class="author-name">NodeRadar 评测实验室</h3>
+      <span class="author-tagline">资深网络架构师 · 专线实测评测人</span>
+      <p class="author-bio">
+        全天候 24 小时真实监控全球骨干网抖动与流媒体解锁。拒绝收钱云测评，坚持客观实测数据。
+      </p>
+      <div class="author-meta-stats">
+        <div class="m-stat">
+          <strong>28+</strong>
+          <span>收录机场</span>
+        </div>
+        <div class="m-stat">
+          <strong>180+</strong>
+          <span>实测节点</span>
+        </div>
+        <div class="m-stat">
+          <strong>99.8%</strong>
+          <span>监测可用率</span>
+        </div>
+      </div>
+      <a href={siteConfig.telegramChannelPlaceholder} target="_blank" rel="nofollow noopener" class="btn btn-secondary btn-sm btn-block author-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+        <span>关注 TG 实时监控防失联</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- 稳定机场精选推荐速查 (Aff 核心导购卡片) -->
+  <div class="sidebar-widget glass-card aff-widget">
+    <div class="widget-head">
+      <div class="w-title">
+        <span class="pulse-dot"></span>
+        <h4>今日高稳专线榜单速查</h4>
+      </div>
+      <a href="./index.html#rankings" class="w-more">全榜 &rarr;</a>
+    </div>
+
+    <div class="mini-rank-list">
+      {miniRankings.map((item, idx) => (
+        <div class="mini-rank-item">
+          <div class="rank-badge-col">
+            <span class={`r-num r-${idx + 1}`}>{item.badge}</span>
+          </div>
+          <div class="rank-main-col">
+            <div class="rank-title-row">
+              <a href={`./blog/${item.reviewSlug}/index.html`} class="r-name">{item.name}</a>
+              <span class="r-score">★ {item.score}</span>
+            </div>
+            <div class="rank-sub-row">
+              <span class="r-line">{item.line}</span>
+              <span class="r-price">{item.price}</span>
+            </div>
+            <div class="rank-btn-row">
+              <AffButton href={item.url} label="直达官网" size="sm" variant={idx === 0 ? "gold" : "primary"} brandName={item.name} />
+              <a href={`./blog/${item.reviewSlug}/index.html`} class="r-review-link">看实测</a>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- 热门阅读榜单 -->
+  <div class="sidebar-widget glass-card">
+    <div class="widget-head">
+      <div class="w-title">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+        </svg>
+        <h4>热门阅读排行</h4>
+      </div>
+    </div>
+    <ol class="hot-posts-list">
+      {hotPosts.map((hp, i) => (
+        <li class="hot-post-item">
+          <span class={`hot-idx hot-idx-${i + 1}`}>{i + 1}</span>
+          <div class="hot-post-info">
+            <a href={`./blog/${hp.slug}/index.html`} class="hot-post-title">{hp.title}</a>
+            <span class="hot-post-reads">🔥 {hp.reads} 次阅读</span>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+
+  <!-- 热门标签云 -->
+  <div class="sidebar-widget glass-card">
+    <div class="widget-head">
+      <div class="w-title">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+          <line x1="7" y1="7" x2="7.01" y2="7"></line>
+        </svg>
+        <h4>热门话题标签</h4>
+      </div>
+    </div>
+    <div class="tag-cloud">
+      {siteConfig.keywords.map(kw => (
+        <a href="/category/reviews" class="cloud-tag">#{kw}</a>
+      ))}
+    </div>
+  </div>
+
+  <!-- 实时监控通报 -->
+  <div class="sidebar-widget glass-card status-widget">
+    <div class="status-top">
+      <span class="pulse-dot"></span>
+      <strong>实验室节点状态实时汇报</strong>
+    </div>
+    <p class="status-desc">
+      当前监控探针运行正常。今日晚高峰各大 IEPL 专线骨干节点丢包率均在 0.2% 以下，Netflix / ChatGPT 解锁率保持 99.8%。
+    </p>
+  </div>
+</aside>
+
+<style>
+  .blog-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    position: sticky;
+    top: 85px;
+  }
+
+  .sidebar-widget {
+    padding: 1.35rem;
+    overflow: hidden;
+  }
+
+  /* 博主卡片 */
+  .author-widget {
+    padding: 0;
+    text-align: center;
+  }
+
+  .author-banner {
+    height: 70px;
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.4) 0%, rgba(99, 102, 241, 0.4) 100%);
+  }
+
+  .author-info {
+    padding: 0 1.25rem 1.35rem;
+    position: relative;
+  }
+
+  .author-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: 3px solid #0e1424;
+    margin: -36px auto 0.65rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    display: block;
+  }
+
+  .author-name {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 0.2rem;
+  }
+
+  .author-tagline {
+    font-size: 0.75rem;
+    color: var(--accent-cyan);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.65rem;
+  }
+
+  .author-bio {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+
+  .author-meta-stats {
+    display: flex;
+    justify-content: space-around;
+    padding: 0.75rem 0;
+    margin-bottom: 1rem;
+    border-top: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .m-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .m-stat strong {
+    font-size: 1.05rem;
+    color: #ffffff;
+    font-weight: 800;
+  }
+
+  .m-stat span {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+  }
+
+  .author-btn {
+    width: 100%;
+    font-size: 0.82rem;
+  }
+
+  /* Widget Head */
+  .widget-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .w-title {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .w-title h4 {
+    font-size: 0.95rem;
+    font-weight: 750;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  .w-more {
+    font-size: 0.78rem;
+    color: var(--accent-cyan);
+    font-weight: 600;
+  }
+
+  /* Aff 导购挂件 */
+  .aff-widget {
+    border-color: rgba(251, 191, 36, 0.3);
+    background: linear-gradient(180deg, rgba(20, 28, 48, 0.9) 0%, rgba(10, 15, 26, 0.95) 100%);
+  }
+
+  .mini-rank-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .mini-rank-item {
+    display: flex;
+    gap: 0.75rem;
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .mini-rank-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .r-num {
+    font-size: 0.68rem;
+    font-weight: 800;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .r-1 { background: var(--grad-gold); color: #000; }
+  .r-2 { background: rgba(56, 189, 248, 0.2); color: #38bdf8; }
+  .r-3 { background: rgba(52, 211, 153, 0.2); color: #34d399; }
+
+  .rank-main-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .rank-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .r-name {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .r-name:hover {
+    color: var(--accent-cyan);
+  }
+
+  .r-score {
+    font-size: 0.78rem;
+    font-weight: 750;
+    color: var(--accent-gold);
+  }
+
+  .rank-sub-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.72rem;
+    color: var(--text-dim);
+  }
+
+  .r-line {
+    color: #94a3b8;
+  }
+
+  .r-price {
+    color: var(--accent-gold);
+    font-weight: 600;
+  }
+
+  .rank-btn-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+  }
+
+  .r-review-link {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    text-decoration: underline;
+  }
+  .r-review-link:hover {
+    color: #ffffff;
+  }
+
+  /* 热门文章 */
+  .hot-posts-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .hot-post-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+  }
+
+  .hot-idx {
+    font-size: 0.78rem;
+    font-weight: 800;
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-dim);
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .hot-idx-1 { background: var(--grad-gold); color: #000; }
+  .hot-idx-2 { background: rgba(56, 189, 248, 0.2); color: #38bdf8; }
+  .hot-idx-3 { background: rgba(52, 211, 153, 0.2); color: #34d399; }
+
+  .hot-post-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .hot-post-title {
+    font-size: 0.82rem;
+    color: var(--text-main);
+    line-height: 1.45;
+  }
+  .hot-post-title:hover {
+    color: var(--accent-cyan);
+  }
+
+  .hot-post-reads {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+  }
+
+  /* 标签云 */
+  .tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .cloud-tag {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    background: rgba(255, 255, 255, 0.04);
+    padding: 0.2rem 0.55rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-light);
+    transition: all 0.2s ease;
+  }
+
+  .cloud-tag:hover {
+    color: var(--accent-cyan);
+    border-color: var(--border-accent);
+    background: rgba(56, 189, 248, 0.08);
+  }
+
+  /* 状态监控 */
+  .status-widget {
+    background: rgba(52, 211, 153, 0.05);
+    border-color: rgba(52, 211, 153, 0.25);
+  }
+
+  .status-top {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.82rem;
+    color: var(--accent-emerald);
+    margin-bottom: 0.4rem;
+  }
+
+  .status-desc {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin: 0;
+  }
+</style>

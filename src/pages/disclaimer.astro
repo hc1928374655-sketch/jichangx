@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+
+const breadcrumbItems = [
+  { title: '首页', href: '/' },
+  { title: '免责声明与合规条款' }
+];
+---
+
+<BaseLayout
+  title="免责声明与推广合规条款"
+  description="NodeRadar 网站免责声明、联盟推广佣金透明度说明及服务使用法律风险提示。"
+>
+  <div class="container page-container">
+    <Breadcrumb items={breadcrumbItems} />
+
+    <header class="page-header">
+      <span class="section-tag">法律与合规</span>
+      <h1 class="page-title">免责声明与服务条款</h1>
+      <p class="page-subtitle">使用本站内容前，请仔细阅读以下合规声明</p>
+    </header>
+
+    <div class="prose page-body glass-card">
+      <h2>1. 网站性质与学术测试定位</h2>
+      <p>
+        NodeRadar (以下简称“本站”) 作为一个网络技术测试、通信协议分析与流媒体性能监测的技术交流平台，所刊载的一切测速图表、数据分析及软件教程仅用于计算机网络科学研究与学术探讨。
+      </p>
+
+      <h2>2. 法律合规与使用者责任</h2>
+      <p>
+        用户在查阅本站内容或根据教程进行网络配置时，必须严格遵守所在国家和地区的相关法律法规。任何用户因违反所在司法管辖区法律法规而导致的任何直接或间接后果，由使用者本人自行完全承担，本站概不承担任何连带法律责任。
+      </p>
+
+      <h2>3. 第三方推广与联盟佣金披露 (Affiliate Disclosure)</h2>
+      <p>
+        为了维系本站日常服务器租赁、全球分布式探针及测试环境的日常资金开销，本站页面内包含部分带有追踪标识的推广链接（Affiliate Links）。
+      </p>
+      <ul>
+        <li>如果您通过本站链接前往第三方服务商并完成订阅，本站可能会从该服务商获得少量分成佣金；</li>
+        <li>这<strong>不会增加您的任何购买成本</strong>，甚至多数情况下通过本站合作优惠码可获得专属优惠；</li>
+        <li>我们承诺评测打分严格基于实测数据，绝不因商业合作而隐瞒网络故障、跑路预警或线路降级事实。</li>
+      </ul>
+
+      <h2>4. 第三方服务免责</h2>
+      <p>
+        本站所提及的所有第三方网络加速服务商均为独立实体运营。本站不持有、不运营、不控制任何机场服务器。第三方服务商的定价策略、服务可用性、退款纠纷及政策变动均由其独立负责，本站不对任何第三方的履约能力作任何形式的明示或暗示保证。
+      </p>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .page-container {
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+    max-width: 900px;
+  }
+
+  .page-header {
+    margin-bottom: 2rem;
+  }
+
+  .page-title {
+    font-size: 2.25rem;
+    font-weight: 850;
+    color: #ffffff;
+    margin: 0.5rem 0 0.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .page-subtitle {
+    font-size: 1.05rem;
+    color: var(--text-dim);
+  }
+
+  .page-body {
+    padding: 2.5rem;
+  }
+
+  @media (max-width: 600px) {
+    .page-body {
+      padding: 1.5rem;
+    }
+  }
+</style>
