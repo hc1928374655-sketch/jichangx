@@ -1,0 +1,373 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog');
+const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const breadcrumbItems = [
+  { title: '首页', href: '/' },
+  { title: '站点地图 (Sitemap)' }
+];
+---
+
+<BaseLayout
+  title="站点地图 (Sitemap) - 全站架构与文章索引"
+  description="2026机场推荐 网站全站地图，包含最新 2026 机场天梯榜单、18+ 篇深度专线实机测评报告、客户端保姆级配置教程及分类索引。"
+>
+  <div class="container page-container">
+    <Breadcrumb items={breadcrumbItems} />
+
+    <header class="page-header">
+      <span class="section-tag">全站索引</span>
+      <h1 class="page-title">网站地图 (Sitemap)</h1>
+      <p class="page-subtitle">快速查阅 2026机场推荐 所有频道、天梯榜单、测评报告与教程文章</p>
+    </header>
+
+    <div class="sitemap-grid">
+      <!-- 频道 1：核心栏目与天梯榜 -->
+      <section class="sitemap-card glass-card">
+        <div class="card-head">
+          <span class="card-icon">🧭</span>
+          <h2>核心导航与榜单</h2>
+        </div>
+        <ul class="sitemap-list">
+          <li>
+            <a href="/" class="map-link">
+              <strong>网站首页</strong>
+              <span class="map-desc">全球高速网络专线监测与每日推荐</span>
+            </a>
+          </li>
+          <li>
+            <a href="/rankings" class="map-link">
+              <strong>2026 机场评测总榜</strong>
+              <span class="map-desc">晚高峰测速、4K 解锁与性价比综合天梯</span>
+            </a>
+          </li>
+          <li>
+            <a href="/reviews" class="map-link">
+              <strong>品牌深度评测库</strong>
+              <span class="map-desc">各大专线机场独立实机抓包测评报告</span>
+            </a>
+          </li>
+          <li>
+            <a href="/comparisons" class="map-link">
+              <strong>专线横向测速对比</strong>
+              <span class="map-desc">多机场多维度参数与资费横评矩阵</span>
+            </a>
+          </li>
+          <li>
+            <a href="/tutorials" class="map-link">
+              <strong>客户端保姆级教程</strong>
+              <span class="map-desc">Clash Verge / Sing-box / 小火箭从零上手</span>
+            </a>
+          </li>
+          <li>
+            <a href="/faq" class="map-link">
+              <strong>新手防坑指南与常见问题</strong>
+              <span class="map-desc">机场选购常识、防跑路技巧与网络排查</span>
+            </a>
+          </li>
+          <li>
+            <a href="/about" class="map-link">
+              <strong>关于本站与实验室</strong>
+              <span class="map-desc">测试基准、硬件设备与数据采集规范</span>
+            </a>
+          </li>
+          <li>
+            <a href="/disclaimer" class="map-link">
+              <strong>免责声明与服务条款</strong>
+              <span class="map-desc">合规说明、推广佣金透明度披露</span>
+            </a>
+          </li>
+        </ul>
+      </section>
+
+      <!-- 频道 2：专题推荐与分类 -->
+      <section class="sitemap-card glass-card">
+        <div class="card-head">
+          <span class="card-icon">📑</span>
+          <h2>专题推荐与分类</h2>
+        </div>
+        <ul class="sitemap-list">
+          <li>
+            <a href="/category/reviews" class="map-link">
+              <strong>IEPL 纯专线深度测评</strong>
+              <span class="map-desc">晚高峰 0 丢包物理专线测评归档</span>
+            </a>
+          </li>
+          <li>
+            <a href="/category/comparisons" class="map-link">
+              <strong>机场多维度对比专栏</strong>
+              <span class="map-desc">同价位、同线路类型旗舰机型 PK</span>
+            </a>
+          </li>
+          <li>
+            <a href="/category/tutorials" class="map-link">
+              <strong>客户端分流进阶指南</strong>
+              <span class="map-desc">TUN 模式、Fake-IP 与规则分流实战</span>
+            </a>
+          </li>
+          <li>
+            <a href="/category/guides" class="map-link">
+              <strong>流媒体与原生 AI 解锁专题</strong>
+              <span class="map-desc">Netflix / Disney+ / ChatGPT 原生双 ISP</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="xml-sitemap-box">
+          <h3>🤖 搜索引擎 XML 文件直达</h3>
+          <p>适用于 Google Search Console、Bing Webmaster 等爬虫提交：</p>
+          <div class="xml-links">
+            <a href="/sitemap.xml" target="_blank" class="xml-btn">📄 sitemap.xml</a>
+            <a href="/sitemap-index.xml" target="_blank" class="xml-btn">📄 sitemap-index.xml</a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- 频道 3：全部深度测评与教程文章索引 -->
+    <section class="sitemap-posts-section glass-card">
+      <div class="card-head">
+        <span class="card-icon">📚</span>
+        <h2>全部测评文章与教程索引 ({sortedPosts.length} 篇)</h2>
+      </div>
+      <div class="posts-index-grid">
+        {sortedPosts.map(post => (
+          <article class="post-item-row">
+            <div class="post-item-meta">
+              <span class="post-category-tag">{post.data.category === 'reviews' ? '专线测评' : post.data.category === 'tutorials' ? '配置教程' : post.data.category === 'comparisons' ? '横向对比' : '指南'}</span>
+              <time datetime={post.data.pubDate.toISOString()}>{post.data.pubDate.toISOString().slice(0, 10)}</time>
+            </div>
+            <a href={`/blog/${post.slug}`} class="post-item-title">
+              {post.data.title}
+            </a>
+            <p class="post-item-desc">{post.data.description}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .page-container {
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+    max-width: 1140px;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .section-tag {
+    display: inline-block;
+    padding: 0.25rem 0.85rem;
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    border-radius: var(--radius-full);
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    margin-bottom: 0.75rem;
+  }
+
+  .page-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .page-subtitle {
+    color: var(--text-muted);
+    font-size: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .sitemap-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.75rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .sitemap-card {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-head {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .card-head h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .card-icon {
+    font-size: 1.4rem;
+  }
+
+  .sitemap-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .map-link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-light);
+    transition: all 0.2s ease;
+  }
+
+  .map-link:hover {
+    background: rgba(56, 189, 248, 0.06);
+    border-color: rgba(56, 189, 248, 0.3);
+    transform: translateX(4px);
+  }
+
+  .map-link strong {
+    font-size: 0.95rem;
+    color: var(--text-main);
+  }
+
+  .map-desc {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+  }
+
+  .xml-sitemap-box {
+    margin-top: 1.75rem;
+    padding: 1.25rem;
+    background: rgba(56, 189, 248, 0.05);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    border-radius: var(--radius-md);
+  }
+
+  .xml-sitemap-box h3 {
+    font-size: 0.95rem;
+    margin: 0 0 0.4rem;
+    color: var(--accent-cyan);
+  }
+
+  .xml-sitemap-box p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin: 0 0 0.85rem;
+  }
+
+  .xml-links {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .xml-btn {
+    padding: 0.4rem 0.85rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    transition: all 0.2s ease;
+  }
+
+  .xml-btn:hover {
+    background: var(--accent-cyan);
+    color: #06080e;
+    font-weight: 600;
+  }
+
+  .sitemap-posts-section {
+    padding: 2rem;
+  }
+
+  .posts-index-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .post-item-row {
+    padding: 1.1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .post-item-row:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(56, 189, 248, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .post-item-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  .post-category-tag {
+    padding: 0.15rem 0.45rem;
+    background: rgba(56, 189, 248, 0.12);
+    color: var(--accent-cyan);
+    border-radius: var(--radius-xs);
+    font-weight: 600;
+  }
+
+  .post-item-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-main);
+    line-height: 1.45;
+  }
+
+  .post-item-title:hover {
+    color: var(--accent-cyan);
+  }
+
+  .post-item-desc {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  @media (max-width: 850px) {
+    .sitemap-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

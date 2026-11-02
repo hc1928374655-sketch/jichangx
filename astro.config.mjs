@@ -7,7 +7,7 @@ function customSitemapIntegration() {
     name: 'noderadar-sitemap',
     hooks: {
       'astro:build:done': async ({ dir, pages }) => {
-        const siteUrl = 'https://noderadar.example.com';
+        const siteUrl = 'https://jichangx.org';
         const today = new Date().toISOString().slice(0, 10);
         
         const urls = pages
@@ -37,7 +37,7 @@ ${urls.join('\n')}
 }
 
 export default defineConfig({
-  site: 'https://noderadar.example.com',
+  site: 'https://jichangx.org',
   trailingSlash: 'never',
   integrations: [customSitemapIntegration()],
   markdown: {

@@ -40,7 +40,7 @@ const articleJsonLd = {
   "@type": "BlogPosting",
   "headline": data.title,
   "description": data.description,
-  "image": data.heroImage ? `https://noderadar.example.com${data.heroImage}` : undefined,
+  "image": data.heroImage ? `https://jichangx.org${data.heroImage}` : undefined,
   "datePublished": data.pubDate.toISOString(),
   ...(data.updatedDate ? { "dateModified": data.updatedDate.toISOString() } : {}),
   "author": {
@@ -53,7 +53,7 @@ const articleJsonLd = {
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": `https://noderadar.example.com/blog/${slug}`
+    "@id": `https://jichangx.org/blog/${slug}`
   }
 };
 ---

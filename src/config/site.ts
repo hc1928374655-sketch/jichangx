@@ -28,7 +28,7 @@ export const siteConfig: SiteConfig = {
   name: "2026机场推荐",
   slogan: "专业网络节点评测 · 跨境流媒体解锁 · 专线稳定性实测指南",
   description: "2026机场推荐是专注全球优质网络加速服务、IEPL/IPLC 专线实测、4K 流媒体解锁、晚高峰抖动监测及全平台客户端配置的技术评测站。提供客观中立的节点横评与选购指南。",
-  url: "https://noderadar.example.com",
+  url: "https://jichangx.org",
   author: "2026机场推荐实验室",
   lang: "zh-CN",
   keywords: [

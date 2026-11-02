@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://noderadar.example.com/sitemap-index.xml
+Sitemap: https://jichangx.org/sitemap.xml
+Sitemap: https://jichangx.org/sitemap-index.xml
