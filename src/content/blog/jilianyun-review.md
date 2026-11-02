@@ -5,7 +5,7 @@ pubDate: 2026-10-27T10:00:00Z
 updatedDate: 2026-10-28T10:00:00Z
 category: "reviews"
 tags: ["极连云", "JiLianCloud", "IPLC专线", "永久不限时", "老牌机场", "机场评测"]
-author: "NodeRadar 评测组"
+author: "2026机场推荐 评测组"
 heroImage: "/images/airport-review-cover.jpg"
 isFeatured: false
 reviewData:
@@ -39,7 +39,7 @@ reviewData:
 
 ## 2. 晚高峰实测数据表现
 
-NodeRadar 评测组在晚高峰时段对极连云物理专线实测结果如下：
+2026机场推荐 评测组在晚高峰时段对极连云物理专线实测结果如下：
 
 | 测试项目 | 实测数值 | 表现综述 |
 | :--- | :--- | :--- |

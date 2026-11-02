@@ -5,7 +5,7 @@ pubDate: 2026-10-30T14:00:00Z
 updatedDate: 2026-10-30T16:00:00Z
 category: "reviews"
 tags: ["光年梯", "GuangNianTi", "品质榜眼", "免配客户端", "独享专线", "外贸专线", "机场评测"]
-author: "NodeRadar 评测组"
+author: "2026机场推荐 评测组"
 heroImage: "/images/shuyunti-cover.jpg"
 isFeatured: false
 reviewData:
@@ -41,7 +41,7 @@ reviewData:
 
 ## 2. 晚高峰千兆带宽与连接性能实测
 
-NodeRadar 评测组对其主力公共节点与独享节点进行了实测：
+2026机场推荐 评测组对其主力公共节点与独享节点进行了实测：
 
 | 测试节点类型 | 晚高峰实测延迟 | 晚高峰实测峰值下行 | 丢包率 (Packet Loss) | 解锁与纯净度 |
 | :--- | :--- | :--- | :--- | :--- |

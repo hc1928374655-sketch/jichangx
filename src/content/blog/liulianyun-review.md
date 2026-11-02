@@ -5,7 +5,7 @@ pubDate: 2026-10-19T10:00:00Z
 updatedDate: 2026-10-19T10:00:00Z
 category: "reviews"
 tags: ["榴莲云", "LiuLianYun", "高性价比", "大流量机场", "机场评测"]
-author: "NodeRadar 评测组"
+author: "2026机场推荐 评测组"
 heroImage: "/images/airport-review-cover.jpg"
 isFeatured: false
 reviewData:
@@ -39,7 +39,7 @@ reviewData:
 
 ## 2. 晚高峰实测性能与流媒体解锁表现
 
-NodeRadar 评测组在晚高峰 20:30 对 榴莲云 (LiuLianYun) 主力节点进行了性能轮测：
+2026机场推荐 评测组在晚高峰 20:30 对 榴莲云 (LiuLianYun) 主力节点进行了性能轮测：
 
 - **晚高峰实测峰值下行**：高达 **590 Mbps+**；
 - **流媒体解锁**：实测支持 93.5% 稳定，完美支持 YouTube 4K、Netflix 常用剧集与日常海外社交平台；

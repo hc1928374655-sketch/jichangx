@@ -7,7 +7,7 @@ const blogCollection = defineCollection({
     description: z.string(),
     pubDate: z.date(),
     updatedDate: z.date().optional(),
-    author: z.string().default('NodeRadar 评测组'),
+    author: z.string().default('2026机场推荐 评测组'),
     category: z.enum(['reviews', 'comparisons', 'tutorials', 'guides']),
     tags: z.array(z.string()).default([]),
     heroImage: z.string().optional(),

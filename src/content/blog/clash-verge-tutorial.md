@@ -5,7 +5,7 @@ pubDate: 2026-10-06T16:00:00Z
 updatedDate: 2026-10-07T10:00:00Z
 category: "tutorials"
 tags: ["Clash教程", "ClashVergeRev", "客户端配置", "TUN模式", "翻墙教程"]
-author: "NodeRadar 技术组"
+author: "2026机场推荐 技术组"
 heroImage: "/images/tutorial-cover.jpg"
 isFeatured: true
 tutorialData:

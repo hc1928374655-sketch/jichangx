@@ -5,7 +5,7 @@ pubDate: 2026-10-20T10:00:00Z
 updatedDate: 2026-10-20T10:00:00Z
 category: "reviews"
 tags: ["环球梯", "全球节点", "国际多线", "多国落地", "机场评测"]
-author: "NodeRadar 评测组"
+author: "2026机场推荐 评测组"
 heroImage: "/images/comparison-cover.jpg"
 isFeatured: false
 reviewData:
@@ -39,7 +39,7 @@ reviewData:
 
 ## 2. 晚高峰实测性能与流媒体解锁表现
 
-NodeRadar 评测组在晚高峰 20:30 对 环球梯 主力节点进行了性能轮测：
+2026机场推荐 评测组在晚高峰 20:30 对 环球梯 主力节点进行了性能轮测：
 
 - **晚高峰实测峰值下行**：高达 **610 Mbps+**；
 - **流媒体解锁**：实测支持 94.0% 覆盖广，完美支持 YouTube 4K、Netflix 常用剧集与日常海外社交平台；

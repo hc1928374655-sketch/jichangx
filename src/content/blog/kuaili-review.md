@@ -5,7 +5,7 @@ pubDate: 2026-10-30T09:00:00Z
 updatedDate: 2026-10-30T10:00:00Z
 category: "reviews"
 tags: ["快狸", "KuaiLi", "IEPL专线", "综合探花", "萌新首选", "平价专线", "机场评测"]
-author: "NodeRadar 评测组"
+author: "2026机场推荐 评测组"
 heroImage: "/images/shuyunti-cover.jpg"
 isFeatured: false
 reviewData:
@@ -40,7 +40,7 @@ reviewData:
 
 ## 2. 晚高峰千兆带宽实测表现
 
-NodeRadar 评测组在晚高峰 21:00 对快狸主力节点进行了性能测试：
+2026机场推荐 评测组在晚高峰 21:00 对快狸主力节点进行了性能测试：
 
 | 测试节点 | 晚高峰平均延迟 | 实测峰值下行 | 丢包率 | 体验评价 |
 | :--- | :--- | :--- | :--- | :--- |

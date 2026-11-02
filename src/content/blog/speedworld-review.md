@@ -5,7 +5,7 @@ pubDate: 2026-10-28T10:00:00Z
 updatedDate: 2026-10-29T10:00:00Z
 category: "reviews"
 tags: ["速界", "SpeedWorld", "IPLC专线", "平价机场", "高性价比", "机场评测"]
-author: "NodeRadar 评测组"
+author: "2026机场推荐 评测组"
 heroImage: "/images/tutorial-cover.jpg"
 isFeatured: false
 reviewData:
@@ -38,7 +38,7 @@ reviewData:
 
 ## 2. 晚高峰实测数据看板
 
-NodeRadar 评测组在晚高峰 21:00 黄金时段进行了多轮并发测速：
+2026机场推荐 评测组在晚高峰 21:00 黄金时段进行了多轮并发测速：
 
 | 监测项 | 实测结果 | 评价 |
 | :--- | :--- | :--- |

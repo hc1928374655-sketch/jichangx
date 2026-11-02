@@ -5,7 +5,7 @@ pubDate: 2026-10-26T10:00:00Z
 updatedDate: 2026-10-26T12:00:00Z
 category: "reviews"
 tags: ["边缘", "EdgeNova", "IPLC专线", "大带宽机场", "流媒体解锁", "机场评测"]
-author: "NodeRadar 评测组"
+author: "2026机场推荐 评测组"
 heroImage: "/images/comparison-cover.jpg"
 isFeatured: false
 reviewData:
@@ -39,7 +39,7 @@ reviewData:
 
 ## 2. 晚高峰千兆带宽与延迟实测数据
 
-NodeRadar 评测组在晚高峰 21:00 对边缘主力节点进行了连续压力轮测：
+2026机场推荐 评测组在晚高峰 21:00 对边缘主力节点进行了连续压力轮测：
 
 | 测试节点 | 晚高峰实测延迟 | 晚高峰实测峰值下行 | 丢包率 (Packet Loss) | 4K 缓冲表现 |
 | :--- | :--- | :--- | :--- | :--- |
