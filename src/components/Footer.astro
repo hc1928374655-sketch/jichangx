@@ -16,19 +16,6 @@ const currentYear = new Date().getFullYear();
         <p class="brand-desc">
           专注提供全球网络加速节点、IEPL/IPLC 跨境专线实测、4K 流媒体解锁监测与全平台客户端配置指南。立足客观数据，拒绝盲目跟风。
         </p>
-        <div class="aff-disclosure-box">
-          <div class="disclosure-header">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="disclosure-icon">
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="16" x2="12" y2="12"></line>
-              <line x1="12" y1="8" x2="12.01" y2="8"></line>
-            </svg>
-            <span>推广赞助与佣金说明 (Affiliate Disclosure)</span>
-          </div>
-          <p class="disclosure-text">
-            {siteConfig.affNotice}
-          </p>
-        </div>
       </div>
 
       <!-- 快速导航 -->
@@ -64,8 +51,8 @@ const currentYear = new Date().getFullYear();
           <li><a href="/about">关于本站与测试基准</a></li>
           <li><a href="/disclaimer">免责声明与服务条款</a></li>
           <li><a href="/faq">如何判断机场是否稳定</a></li>
+          <li><a href="/comparisons">主流专线横向测速对比</a></li>
           <li><a href={siteConfig.telegramChannelPlaceholder} target="_blank" rel="nofollow noopener">TG 监控与防失联通知</a></li>
-          <li><a href="/sitemap-index.xml" target="_blank">网站地图 (XML Sitemap)</a></li>
         </ul>
       </div>
     </div>
@@ -89,8 +76,6 @@ const currentYear = new Date().getFullYear();
         <a href="/about">关于我们</a>
         <span class="sep">·</span>
         <a href="/disclaimer">免责条款</a>
-        <span class="sep">·</span>
-        <a href="/sitemap-index.xml">站点地图</a>
       </div>
     </div>
   </div>
@@ -100,7 +85,7 @@ const currentYear = new Date().getFullYear();
   .site-footer {
     background: #06080e;
     border-top: 1px solid var(--border-light);
-    padding-top: 4rem;
+    padding-top: 3.5rem;
     padding-bottom: 2.5rem;
     position: relative;
     z-index: 10;
@@ -108,9 +93,9 @@ const currentYear = new Date().getFullYear();
 
   .footer-grid {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 2.5rem;
-    margin-bottom: 3rem;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 2.5rem;
   }
 
   .footer-logo .logo-name {
@@ -128,37 +113,9 @@ const currentYear = new Date().getFullYear();
   .brand-desc {
     font-size: 0.88rem;
     color: var(--text-muted);
-    margin: 1rem 0 1.25rem;
-    line-height: 1.65;
-  }
-
-  .aff-disclosure-box {
-    background: rgba(14, 20, 36, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: var(--radius-md);
-    padding: 0.85rem 1rem;
-  }
-
-  .disclosure-header {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-size: 0.78rem;
-    font-weight: 700;
-    color: var(--accent-gold);
-    margin-bottom: 0.4rem;
-  }
-
-  .disclosure-icon {
-    color: var(--accent-gold);
-    flex-shrink: 0;
-  }
-
-  .disclosure-text {
-    font-size: 0.76rem;
-    color: var(--text-dim);
-    line-height: 1.55;
-    margin: 0;
+    margin: 1.1rem 0 0;
+    line-height: 1.75;
+    max-width: 320px;
   }
 
   .footer-title {
@@ -247,6 +204,7 @@ const currentYear = new Date().getFullYear();
   @media (max-width: 992px) {
     .footer-grid {
       grid-template-columns: 1fr 1fr;
+      gap: 2rem;
     }
     .brand-col {
       grid-column: span 2;
@@ -256,6 +214,7 @@ const currentYear = new Date().getFullYear();
   @media (max-width: 600px) {
     .footer-grid {
       grid-template-columns: 1fr;
+      gap: 2rem;
     }
     .brand-col {
       grid-column: span 1;
