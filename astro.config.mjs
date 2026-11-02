@@ -30,17 +30,9 @@ function customSitemapIntegration() {
 ${urls.join('\n')}
 </urlset>`;
 
-        const sitemapIndexContent = `<?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
-<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <sitemap>
-    <loc>${siteUrl}/sitemap.xml</loc>
-    <lastmod>${today}</lastmod>
-  </sitemap>
-</sitemapindex>`;
-
         await fs.writeFile(new URL('sitemap.xml', dir), sitemapContent, 'utf-8');
-        await fs.writeFile(new URL('sitemap-index.xml', dir), sitemapIndexContent, 'utf-8');
+        // 兼容处理：若旧爬虫访问 sitemap-index.xml 也指向同一文件
+        await fs.writeFile(new URL('sitemap-index.xml', dir), sitemapContent, 'utf-8');
       }
     }
   };

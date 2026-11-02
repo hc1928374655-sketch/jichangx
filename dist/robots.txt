@@ -2,4 +2,3 @@ User-agent: *
 Allow: /
 
 Sitemap: https://jichangx.org/sitemap.xml
-Sitemap: https://jichangx.org/sitemap-index.xml
