@@ -5,7 +5,9 @@ import PostCard from '../../components/PostCard.astro';
 import { getCollection } from 'astro:content';
 
 const allPosts = await getCollection('blog');
-const reviewPosts = allPosts.filter(p => p.data.category === 'reviews');
+const reviewPosts = allPosts
+  .filter(p => p.data.category === 'reviews')
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 const breadcrumbItems = [
   { title: '首页', href: '/' },

@@ -1,17 +1,17 @@
 ---
-title: "光年梯 (GuangNianTi) 深度评测：自研多端免配客户端与独立独享专线定制实测"
-description: "2026 光年梯 (GuangNianTi) 独立实测报告：专为小白打造的全平台免配置客户端体验，支持私人独立专线（一人一线独立公网IP）定制，附专属 8 折优惠码 GNT80 与全套餐价格拆解。"
-pubDate: 2026-10-29T10:00:00Z
-updatedDate: 2026-10-30T10:00:00Z
+title: "【品质榜眼 · 极速先锋】2026 光年梯 (GuangNianTi) 深度评测：自研多端免配客户端与独立独享专线定制实测"
+description: "2026 综合评测第二名：光年梯 (GuangNianTi) 独立实测报告：专为小白打造的全平台免配置客户端体验，支持私人独立专线（一人一线独立公网IP）定制，品质榜眼推荐，附专属 8 折优惠码 GNT80 与全套餐价格拆解。"
+pubDate: 2026-10-30T14:00:00Z
+updatedDate: 2026-10-30T16:00:00Z
 category: "reviews"
-tags: ["光年梯", "GuangNianTi", "免配客户端", "独享专线", "外贸专线", "机场评测"]
+tags: ["光年梯", "GuangNianTi", "品质榜眼", "免配客户端", "独享专线", "外贸专线", "机场评测"]
 author: "NodeRadar 评测组"
 heroImage: "/images/shuyunti-cover.jpg"
 isFeatured: false
 reviewData:
   brandName: "光年梯 (GuangNianTi)"
-  overallScore: 9.4
-  starRating: 4.7
+  overallScore: 9.6
+  starRating: 4.9
   lineType: "IPLC / IEPL 高速专线 (支持独享定制)"
   entryPrice: "¥18.0 / 月 起 (年付折合 ¥7.4 / 月)"
   trafficRange: "50GB/年起，110GB - 900GB/月，独享500GB/月"

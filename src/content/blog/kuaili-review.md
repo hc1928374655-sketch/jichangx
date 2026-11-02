@@ -1,10 +1,10 @@
 ---
-title: "【品质榜眼 · 极速先锋】2026 快狸 (KuaiLi Cloud) 深度评测：萌系高质感全 IEPL 纯专线实测与套餐解析"
-description: "2026 综合评测第二名：快狸 (KuaiLi Cloud) 独立实机实测报告。萌系极简交互设计与全 IEPL 纯物理光纤网络，小狸基础版 22 元 100G 纯专线高性价比，亚太极速直连，附专属优惠码 kl888。"
-pubDate: 2026-10-30T10:00:00Z
-updatedDate: 2026-10-30T12:00:00Z
+title: "【品质探花 · 极速新星】2026 快狸 (KuaiLi Cloud) 深度评测：萌系高质感全 IEPL 纯专线实测与套餐解析"
+description: "2026 综合评测第三名：快狸 (KuaiLi Cloud) 独立实机实测报告。萌系极简交互设计与全 IEPL 纯物理光纤网络，小狸基础版 22 元 100G 纯专线高性价比，亚太极速直连，附专属优惠码 kl888。"
+pubDate: 2026-10-30T09:00:00Z
+updatedDate: 2026-10-30T10:00:00Z
 category: "reviews"
-tags: ["快狸", "KuaiLi", "IEPL专线", "品质榜眼", "萌新首选", "平价专线", "机场评测"]
+tags: ["快狸", "KuaiLi", "IEPL专线", "综合探花", "萌新首选", "平价专线", "机场评测"]
 author: "NodeRadar 评测组"
 heroImage: "/images/shuyunti-cover.jpg"
 isFeatured: false
