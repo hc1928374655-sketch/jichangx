@@ -45,7 +45,7 @@ export const siteConfig: SiteConfig = {
   ],
   affNotice: "声明：本站评测秉持客观实测原则。部分外链包含推广合作伙伴代码（Affiliate Link），若您通过链接订购服务，本站可能会获得少量佣金，用于维系服务器与自动化测试节点日常开销，但绝不影响测试中立性与客观打分。",
   defaultAffPlaceholder: "https://yp76688.kosingaff.com/#/register?code=MuizUDqY",
-  telegramChannelPlaceholder: "https://t.me/example_channel",
+  telegramChannelPlaceholder: "https://t.me/kexinyun8899",
   navItems: [
     { title: "首页", href: "/" },
     { title: "机场综合榜", href: "/rankings", badge: "TOP" },
