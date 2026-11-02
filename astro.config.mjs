@@ -25,12 +25,22 @@ function customSitemapIntegration() {
           });
 
         const sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.join('\n')}
 </urlset>`;
 
+        const sitemapIndexContent = `<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>${siteUrl}/sitemap.xml</loc>
+    <lastmod>${today}</lastmod>
+  </sitemap>
+</sitemapindex>`;
+
         await fs.writeFile(new URL('sitemap.xml', dir), sitemapContent, 'utf-8');
-        await fs.writeFile(new URL('sitemap-index.xml', dir), sitemapContent, 'utf-8');
+        await fs.writeFile(new URL('sitemap-index.xml', dir), sitemapIndexContent, 'utf-8');
       }
     }
   };
