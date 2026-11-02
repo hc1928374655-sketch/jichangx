@@ -263,13 +263,13 @@ img {
 
 /* Markdown Content Styling */
 .prose {
-  color: #cbd5e1;
+  color: var(--text-main);
   font-size: 1.05rem;
   line-height: 1.85;
 }
 
 .prose h1, .prose h2, .prose h3, .prose h4 {
-  color: #ffffff;
+  color: var(--text-bright);
   font-weight: 700;
   letter-spacing: -0.02em;
   margin-top: 2rem;
@@ -301,7 +301,7 @@ img {
 }
 
 .prose strong {
-  color: #ffffff;
+  color: var(--text-bright);
   font-weight: 600;
 }
 
