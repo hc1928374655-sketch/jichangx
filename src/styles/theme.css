@@ -219,9 +219,16 @@
   box-shadow: 0 0 25px rgba(245, 158, 11, 0.1) !important;
 }
 
-[data-theme="light"] .spec-item {
+[data-theme="light"] .card-specs-col {
   background: #f8fafc !important;
   border: 1px solid rgba(15, 23, 42, 0.06) !important;
+}
+
+[data-theme="light"] .spec-item {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
 }
 
 [data-theme="light"] .spec-label {
@@ -230,6 +237,70 @@
 
 [data-theme="light"] .spec-value {
   color: #0f172a !important;
+}
+
+[data-theme="light"] .feat-tag {
+  background: rgba(15, 23, 42, 0.04) !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+  color: #334155 !important;
+}
+
+[data-theme="light"] .review-score-board {
+  background: #ffffff !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+}
+
+[data-theme="light"] .specs-matrix {
+  background: #f8fafc !important;
+  border: 1px solid rgba(15, 23, 42, 0.06) !important;
+}
+
+[data-theme="light"] .spec-cell {
+  background: #ffffff !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+}
+
+[data-theme="light"] .cell-label {
+  color: #64748b !important;
+}
+
+[data-theme="light"] .cell-value {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .pros-box {
+  background: rgba(5, 150, 105, 0.04) !important;
+  border: 1px solid rgba(5, 150, 105, 0.2) !important;
+}
+
+[data-theme="light"] .pros-list li {
+  color: #334155 !important;
+}
+
+[data-theme="light"] .cons-box {
+  background: rgba(225, 29, 72, 0.04) !important;
+  border: 1px solid rgba(225, 29, 72, 0.2) !important;
+}
+
+[data-theme="light"] .cons-list li {
+  color: #334155 !important;
+}
+
+[data-theme="light"] .score-dial {
+  background: #f8fafc !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+}
+
+[data-theme="light"] .score-num {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .board-header {
+  border-bottom: 1px solid rgba(15, 23, 42, 0.06) !important;
+}
+
+[data-theme="light"] .board-action-bar {
+  border-top: 1px solid rgba(15, 23, 42, 0.06) !important;
 }
 
 [data-theme="light"] .price-val {
