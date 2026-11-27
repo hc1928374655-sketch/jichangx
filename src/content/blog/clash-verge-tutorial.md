@@ -1,6 +1,6 @@
 ---
 title: "2026 最新 Clash Verge Rev 新手小白极速上手配置全指南"
-description: "专为新手整理的 Clash Verge Rev 保姆级配置教程：从安装、导入机场订阅、节点选择到开启 TUN 模式与规则优化一步到位。"
+description: "专为新手整理的 2026 最新 Clash Verge Rev 保姆级配置教程：详细讲解客户端下载安装、订阅链接一键导入、节点分组选择、开启 TUN 虚拟网卡模式及分流规则优化，手把手带你轻松玩转科学上网全流程。"
 pubDate: 2026-10-06T16:00:00Z
 updatedDate: 2026-10-07T10:00:00Z
 category: "tutorials"

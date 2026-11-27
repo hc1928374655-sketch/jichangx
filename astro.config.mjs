@@ -11,7 +11,7 @@ function customSitemapIntegration() {
         const today = new Date().toISOString().slice(0, 10);
         
         const urls = pages
-          .filter(page => !page.pathname.includes('404'))
+          .filter(page => !page.pathname.includes('404') && !page.pathname.includes('comparisons'))
           .map(page => {
             const path = page.pathname === '' ? '' : page.pathname.replace(/^\/+|\/+$/g, '') + '/';
             const loc = path === '' ? `${siteUrl}/` : `${siteUrl}/${path}`;

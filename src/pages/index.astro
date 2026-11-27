@@ -8,7 +8,9 @@ const allPosts = await getCollection('blog');
 const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
-<BaseLayout>
+<BaseLayout
+  description="2026机场推荐是专注全球优质网络加速服务、IEPL/IPLC 物理专线实机测速、4K/8K 跨境流媒体解锁、晚高峰低延迟抖动监测及全平台客户端配置的技术评测站。提供客观中立的节点天梯榜、独家折扣优惠券与避坑指南。"
+>
   <!-- 博客首页精选头条展台 (杂志风格) -->
   <FeaturedShowcase posts={sortedPosts} />
 </BaseLayout>

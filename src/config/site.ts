@@ -27,7 +27,7 @@ export interface SiteConfig {
 export const siteConfig: SiteConfig = {
   name: "2026机场推荐",
   slogan: "专业网络节点评测 · 跨境流媒体解锁 · 专线稳定性实测指南",
-  description: "2026机场推荐是专注全球优质网络加速服务、IEPL/IPLC 专线实测、4K 流媒体解锁、晚高峰抖动监测及全平台客户端配置的技术评测站。提供客观中立的节点横评与选购指南。",
+  description: "2026机场推荐是专注全球优质网络加速服务、IEPL/IPLC 物理专线实机测速、4K/8K 跨境流媒体解锁、晚高峰低延迟抖动监测及全平台客户端配置的技术评测站。提供客观中立的节点天梯榜、独家折扣优惠券与避坑指南。",
   url: "https://jichangx.org",
   author: "2026机场推荐实验室",
   lang: "zh-CN",
@@ -58,19 +58,19 @@ export const siteConfig: SiteConfig = {
     {
       key: "reviews",
       name: "品牌深度评测",
-      description: "针对各家专线服务商的晚高峰延迟、流媒体解锁、带宽速率及客服响应全方位单店测评报告。",
+      description: "汇总 2026 全球优质机场与专线服务商单店深度实机测评报告，多维度剖析晚高峰真实速率、4K/8K 流媒体解锁、原生双 ISP 线路质量及最新折扣优惠码，助您客观对比并选出最适合自己的稳定节点方案。",
       color: "#3b82f6"
     },
     {
       key: "tutorials",
       name: "客户端实战教程",
-      description: "覆盖 Windows / macOS / iOS / Android / 软路由保姆级配置与规则优化。",
+      description: "全平台科学上网代理客户端保姆级实战配置教程：详细覆盖 Windows、macOS、iOS、Android 以及软路由系统的 Clash Verge Rev、Sing-box、Shadowrocket 等工具安装、订阅导入、分流规则优化与 TUN 模式配置指南。",
       color: "#10b981"
     },
     {
       key: "guides",
       name: "选购科普指引",
-      description: "专线原理、原生 IP、防跑路技巧、网络协议演进等深度硬核知识。",
+      description: "新手必读的机场选购与科普防坑指引：全面解析 IEPL/IPLC 专线与普通 BGP 隧道原理差异、原生双 ISP 解锁机制、机场主跑路风险防范技巧及现代网络加密协议演进，助您明智选购不踩雷。",
       color: "#f59e0b"
     }
   ]

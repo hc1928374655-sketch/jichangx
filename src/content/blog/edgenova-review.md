@@ -1,6 +1,6 @@
 ---
 title: "边缘 (EdgeNova) 深度评测：2.5Gbps 超大带宽物理 IPLC 专线实测与套餐解析"
-description: "2026 边缘 (EdgeNova) 独立实机测评：单节点峰值 2.5Gbps 超大物理带宽冗余，全节点 x1 倍率不虚标，覆盖全球十余国落地，附专属 8 折优惠码 xk808 与全套餐选购建议。"
+description: "2026 边缘 (EdgeNova) 独立实机深度测评：单节点峰值高达 2.5Gbps 超大物理带宽冗余，全节点 x1 倍率真实不虚标，覆盖全球十余国落地与 4K 流媒体秒开，附全套餐资费拆解、选购建议与专属 8 折优惠码 xk808。"
 pubDate: 2026-10-26T10:00:00Z
 updatedDate: 2026-10-26T12:00:00Z
 category: "reviews"
